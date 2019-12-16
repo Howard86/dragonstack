@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node ./bin/server",
     "dev": "nodemon ./bin/server",
+    "configure-dev": "npm run configure && npm run dev",
+    "configure": "./bin/configure_db.sh",
     "script": "eslint --fix . && echo 'Lint complete.'"
   },
   "keywords": [],
@@ -24,6 +26,7 @@
     "prettier": "^1.19.1"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "^7.14.0"
   }
 }
