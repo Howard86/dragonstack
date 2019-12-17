@@ -1,8 +1,8 @@
-const TRAITS = require('../app/data/traits.json');
+import TRAITS from '../app/data/traits.json';
 
 const DEFAULT_PROPERTIES = {
   nickname: 'unnamed',
-  generationId: app.locals.engine.generationId,
+  generationId: 0,
   get birthDate() {
     return new Date();
   },
@@ -32,4 +32,4 @@ class Dragon {
   }
 }
 
-module.exports = Dragon;
+export default Dragon;

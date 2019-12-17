@@ -2,12 +2,24 @@
 
 export PGPASSWORD='node_password'
 
-echo "Configuring dragonstackdb"
+# define varaibles
+path=./bin/sql/
+dbname=dragonstackdb
 
-dropdb -U node_user dragonstackdb
-createdb -U node_user dragonstackdb
+# start
+echo "Configuring $dbname"
 
-psql -U node_user dragonstackdb < ./bin/sql/generation.sql
-psql -U node_user dragonstackdb < ./bin/sql/dragon.sql
+# reset database
+dropdb -U node_user "$dbname"
+createdb -U node_user "$dbname"
 
-echo "dragonstackdb configured"
+for file in "$path"table/*.sql; do
+  [ -e "$file" ] || continue
+  psql -U node_user "$dbname" < "$file";
+done
+
+# add relation
+psql -U node_user "$dbname" < "$path"relation.sql
+
+# end
+echo "$dbname is configured"

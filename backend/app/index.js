@@ -1,7 +1,7 @@
-const express = require('express');
-const GenerationEngine = require('./generation/engine');
-const dragonRouter = require('./api/dragon');
-const generationRouter = require('./api/generation');
+import express from 'express';
+import GenerationEngine from './generation/engine';
+import dragonRouter from './api/dragon';
+import generationRouter from './api/generation';
 
 const app = express();
 const engine = new GenerationEngine();
@@ -13,4 +13,4 @@ app.use('/generation', generationRouter);
 
 engine.start();
 
-module.exports = app;
+export default app;

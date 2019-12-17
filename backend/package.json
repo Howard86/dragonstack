@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./bin/server",
-    "dev": "nodemon ./bin/server",
+    "start": "babel-node ./bin/server",
+    "dev": "nodemon --exec babel-node ./bin/server",
     "configure-dev": "npm run configure && npm run dev",
     "configure": "./bin/configure_db.sh",
     "script": "eslint --fix . && echo 'Lint complete.'"
@@ -14,6 +14,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.6",
     "eslint": "^6.7.2",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.7.0",

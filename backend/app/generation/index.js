@@ -1,5 +1,5 @@
-const Dragon = require('../dragon');
-const { REFRESH_RATE, SECONDS } = require('../config');
+import Dragon from '../dragon';
+import { REFRESH_RATE, SECONDS } from '../config';
 
 const refreshRate = REFRESH_RATE * SECONDS;
 
@@ -29,4 +29,4 @@ class Generation {
   }
 }
 
-module.exports = Generation;
+export default Generation;

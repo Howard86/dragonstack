@@ -1,5 +1,5 @@
-const Generation = require('.');
-const GenerationTable = require('./table');
+import Generation from '.';
+import { GenerationTable } from './table';
 class GenerationEngine {
   constructor() {
     this.generation = null;
@@ -33,4 +33,4 @@ class GenerationEngine {
   }
 }
 
-module.exports = GenerationEngine;
+export default GenerationEngine;

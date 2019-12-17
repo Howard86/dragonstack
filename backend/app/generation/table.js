@@ -1,4 +1,4 @@
-const pool = require('../../databasePool');
+import pool from '../../databasePool';
 
 class GenerationTable {
   static storeGeneration(generation) {
@@ -36,4 +36,4 @@ class DragonTable {
   }
 }
 
-module.exports = { GenerationTable, DragonTable };
+export { GenerationTable, DragonTable };
