@@ -1,9 +1,10 @@
-import TRAITS from '../app/data/traits.json';
+import TRAITS from '../data/traits.json';
 
 const DEFAULT_PROPERTIES = {
+  dragonId: undefined,
   nickname: 'unnamed',
-  generationId: 0,
-  get birthDate() {
+  generationId: undefined,
+  get birthdate() {
     return new Date();
   },
   get randomTraits() {
@@ -24,8 +25,9 @@ const DEFAULT_PROPERTIES = {
 };
 
 class Dragon {
-  constructor({ birthDate, nickname, traits, generationId } = {}) {
-    this.birthDate = birthDate || DEFAULT_PROPERTIES.birthDate;
+  constructor({ dragonID, birthdate, nickname, traits, generationId } = {}) {
+    this.dragonId = dragonID || DEFAULT_PROPERTIES.dragonId;
+    this.birthdate = birthdate || DEFAULT_PROPERTIES.birthdate;
     this.nickname = nickname || DEFAULT_PROPERTIES.nickname;
     this.traits = traits || DEFAULT_PROPERTIES.randomTraits;
     this.generationId = generationId || DEFAULT_PROPERTIES.generationId;

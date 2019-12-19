@@ -21,5 +21,6 @@ done
 # add relation
 psql -U node_user "$dbname" < "$path"relation.sql
 
+node ./bin/insertTraits.js
 # end
 echo "$dbname is configured"

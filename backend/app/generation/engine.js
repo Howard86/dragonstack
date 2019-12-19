@@ -1,5 +1,5 @@
 import Generation from '.';
-import { GenerationTable } from './table';
+import GenerationTable from './table';
 class GenerationEngine {
   constructor() {
     this.generation = null;
