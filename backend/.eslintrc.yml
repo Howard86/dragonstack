@@ -5,7 +5,7 @@ env:
   node: true
 extends:
   - 'plugin:react/recommended'
-  - 'eslint:recommended'
+  # - 'eslint:recommended'
   - 'plugin:prettier/recommended'
 globals:
   Atomics: readonly

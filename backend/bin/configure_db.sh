@@ -13,6 +13,7 @@ echo "Configuring $dbname"
 dropdb -U node_user "$dbname"
 createdb -U node_user "$dbname"
 
+# add tables
 for file in "$path"table/*.sql; do
   [ -e "$file" ] || continue
   psql -U node_user "$dbname" < "$file";
