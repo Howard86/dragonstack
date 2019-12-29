@@ -69,4 +69,57 @@ router.get('/logout', (req, res, next) => {
     .catch(error => next(error));
 });
 
+// router.post('/session', (req, res, next) => {
+//   const { sessionString } = req.body;
+//   // repalce %7 with SEPARATOR '|'
+//   const givenSessionString = sessionString.replace(/%7C/g, '|');
+
+//   const { username, id } = Session.parse(givenSessionString);
+//   console.log('id', id);
+//   AccountTable.getAccount({
+//     usernameHash: hash(username),
+//   })
+//     .then(({ account }) => {
+//       console.log('account', account);
+//       if (account) {
+//         res.json({ message: id === account.session_id, account });
+//       } else {
+//         const error = new Error('Cannot find account');
+
+//         throw error;
+//       }
+//     })
+//     .catch(error => next(error));
+// });
+
+router.get('/authenticated', (req, res, next) => {
+  const { sessionString } = req.cookies;
+
+  if (!sessionString || !Session.verify(sessionString)) {
+    const error = new Error('Invalid session');
+
+    error.statusCode = 400;
+
+    return next(error);
+  } else {
+    const { username, id } = Session.parse(sessionString);
+
+    AccountTable.getAccount({
+      usernameHash: hash(username),
+    })
+      .then(({ account }) => {
+        if (account) {
+          const authenticated = account.session_id === id;
+
+          res.json({ authenticated });
+        } else {
+          const error = new Error('Cannot find account');
+
+          throw error;
+        }
+      })
+      .catch(error => next(error));
+  }
+});
+
 export default router;
