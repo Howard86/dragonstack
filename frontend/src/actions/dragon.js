@@ -8,7 +8,7 @@ export const fetchDragon = () => dispatch => {
     .then(response => response.json())
     .then(json => {
       if (json.type === 'error') {
-        dispatch({ type: DRAGON.FETCH_ERROR });
+        dispatch({ type: DRAGON.FETCH_ERROR, message: json.message });
       } else {
         dispatch({ type: DRAGON.FETCH_SUCCESS, dragon: json.dragon });
       }
