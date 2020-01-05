@@ -1,5 +1,5 @@
 import pool from '../../databasePool';
-import DragonTable from '.table';
+import DragonTable from './table';
 import Dragon from '.';
 
 const getDragonWithTraits = ({ dragonId }) => {
@@ -26,10 +26,36 @@ const getDragonWithTraits = ({ dragonId }) => {
       return new Dragon({
         ...dragon,
         dragonId,
-        traits: dragonTraits,
+        traits: dragonTraits.map(trait => {
+          return {
+            traitType: trait.trait_type,
+            traitValue: trait.trait_value,
+          };
+        }),
       });
     })
     .catch(error => console.error(error));
 };
 
-export default getDragonWithTraits;
+const getPublicDragons = () => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      'SELECT id FROM dragon WHERE is_public = TRUE',
+      (error, response) => {
+        if (error) return reject(error);
+
+        const publicDragonRows = response.rows;
+
+        Promise.all(
+          publicDragonRows.map(({ id }) =>
+            getDragonWithTraits({ dragonId: id }),
+          ),
+        )
+          .then(dragons => resolve({ dragons }))
+          .catch(error => reject(error));
+      },
+    );
+  });
+};
+
+export { getDragonWithTraits, getPublicDragons };

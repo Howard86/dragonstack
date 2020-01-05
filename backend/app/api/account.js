@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import AccountTable from '../account/table';
 import { hash } from '../account/helper';
-import { setSession } from './helper';
+import { setSession, authenticatedAccount } from './helper';
 import Session from '../account/session';
+import AccountDragonTable from '../accountDragon/table';
+import { getDragonWithTraits } from '../dragon/helper';
 
 const router = new Router();
 
@@ -95,31 +97,37 @@ router.get('/logout', (req, res, next) => {
 router.get('/authenticated', (req, res, next) => {
   const { sessionString } = req.cookies;
 
-  if (!sessionString || !Session.verify(sessionString)) {
-    const error = new Error('Invalid session');
+  authenticatedAccount({ sessionString })
+    .then(({ authenticated }) => res.json({ authenticated }))
+    .catch(error => next(error));
+});
 
-    error.statusCode = 400;
-
-    return next(error);
-  } else {
-    const { username, id } = Session.parse(sessionString);
-
-    AccountTable.getAccount({
-      usernameHash: hash(username),
+router.get('/dragons', (req, res, next) => {
+  authenticatedAccount({ sessionString: req.cookies.sessionString })
+    .then(({ account }) => {
+      return AccountDragonTable.getAccountDragons({ accountId: account.id });
     })
-      .then(({ account }) => {
-        if (account) {
-          const authenticated = account.session_id === id;
+    .then(({ accountDragons }) => {
+      return Promise.all(
+        accountDragons.map(accountDragon => {
+          return getDragonWithTraits({ dragonId: accountDragon.dragon_id });
+        }),
+      );
+    })
+    .then(dragons => {
+      res.json({ dragons });
+    })
+    .catch(error => next(error));
+});
 
-          res.json({ authenticated });
-        } else {
-          const error = new Error('Cannot find account');
-
-          throw error;
-        }
-      })
-      .catch(error => next(error));
-  }
+router.get('/info', (req, res, next) => {
+  authenticatedAccount({
+    sessionString: req.cookies.sessionString,
+  })
+    .then(({ account, username }) =>
+      res.json({ info: { balance: account.balance, username } }),
+    )
+    .catch(error => next(error));
 });
 
 export default router;

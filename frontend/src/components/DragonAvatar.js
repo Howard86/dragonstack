@@ -39,9 +39,9 @@ class DragonAvatar extends Component {
     const sizing = { width: size, height: size };
 
     return (
-      <div className="dragon-avatar-image-wrapper">
+      <div className='dragon-avatar-image-wrapper'>
         <div
-          className="dragon-avatar-image-background"
+          className='dragon-avatar-image-background'
           style={{
             backgroundColor,
             ...sizing,
@@ -49,12 +49,12 @@ class DragonAvatar extends Component {
         ></div>
         <img
           src={pattern}
-          className="dragon-avatar-image-pattern"
+          className='dragon-avatar-image-pattern'
           style={{ ...sizing }}
         />
         <img
           src={build}
-          className="dragon-avatar-image"
+          className='dragon-avatar-image'
           style={{ ...sizing }}
         />
       </div>
@@ -68,9 +68,9 @@ class DragonAvatar extends Component {
 
     return (
       <div>
-        <span className="label label-default">G{generationId}</span>
+        <span className='label label-default'>G{generationId}</span>
 
-        <span className="label label-success">I{dragonId}</span>
+        <span className='label label-success'>I{dragonId}</span>
         <br />
 
         {traits && traits.map(trait => trait.traitValue).join(', ')}
