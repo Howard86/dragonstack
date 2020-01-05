@@ -37,3 +37,33 @@ const setSessionCookie = ({ sessionString, res }) => {
     // secure: true, use with https
   });
 };
+
+export const authenticatedAccount = ({ sessionString }) => {
+  return new Promise((resolve, reject) => {
+    if (!sessionString || !Session.verify(sessionString)) {
+      const error = new Error('Invalid session');
+
+      error.statusCode = 400;
+
+      return reject(error);
+    } else {
+      const { username, id } = Session.parse(sessionString);
+
+      AccountTable.getAccount({
+        usernameHash: hash(username),
+      })
+        .then(({ account }) => {
+          if (account) {
+            const authenticated = account.session_id === id;
+
+            resolve({ account, authenticated, username });
+          } else {
+            const error = new Error('Cannot find account');
+
+            throw error;
+          }
+        })
+        .catch(error => reject(error));
+    }
+  });
+};

@@ -7,26 +7,24 @@ import { Button } from 'react-bootstrap';
 import DragonAvatar from './DragonAvatar';
 
 class Dragon extends Component {
-  // componentDidMount() {
-  //   this.props.fetchDragon();
-  // }
+  get DragonView() {
+    const { dragon } = this.props;
+    if (dragon.status === fetchStates.error)
+      return <span>{dragon.message}</span>;
+
+    return <DragonAvatar dragon={dragon} />;
+  }
 
   render() {
-    console.log('this.props', this.props);
-
     const { dragon } = this.props;
-
-    // if (dragon.status === fetchStates.fetching) {
-    //   return <div>...</div>;
-    // }
-
     if (dragon.status === fetchStates.error) {
       return <div>{dragon.message}</div>;
     }
     return (
       <div>
         <Button onClick={this.props.fetchDragon}>New Dragon</Button>
-        <DragonAvatar dragon={dragon} />
+        <br />
+        {this.DragonView}
       </div>
     );
   }
@@ -37,8 +35,11 @@ class Dragon extends Component {
 //   return { dragon };
 // };
 
-const componentConnector = connect(({ dragon }) => ({ dragon }), {
-  fetchDragon,
-});
+const componentConnector = connect(
+  ({ dragon }) => ({ dragon: dragon.dragon }),
+  {
+    fetchDragon,
+  },
+);
 
 export default componentConnector(Dragon);

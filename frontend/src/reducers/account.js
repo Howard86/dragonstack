@@ -24,7 +24,7 @@ const account = (state = DEFAULT_ACCOUNT, action) => {
       return {
         ...state,
         status: fetchStates.success,
-        message: account.message,
+        message: action.message,
         loggedIn: false,
       };
     // case ACCOUNT.FETCH_LOGIN_SUCCESS:
@@ -38,7 +38,7 @@ const account = (state = DEFAULT_ACCOUNT, action) => {
       return {
         ...state,
         status: fetchStates.success,
-        message: account.message,
+        message: action.message,
         loggedIn: action.authenticated,
       };
     default:

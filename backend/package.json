@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./bin/server",
-    "debug": "nodemon --exec babel-node app/account/session.js",
+    "debug": "nodemon --exec babel-node app/accountDragon/table.js",
     "dev": "nodemon --exec babel-node ./bin/server",
     "configure-dev": "npm run configure && npm run dev",
     "configure": "./bin/configure_db.sh",
@@ -31,6 +31,7 @@
     "prettier": "^1.19.1"
   },
   "dependencies": {
+    "base-64": "^0.1.0",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "crypto-js": "^3.1.9-1",

@@ -19,8 +19,9 @@ for file in "$path"table/*.sql; do
   psql -U node_user "$dbname" < "$file";
 done
 
-# add relation
+# add others
 psql -U node_user "$dbname" < "$path"relation.sql
+psql -U node_user "$dbname" < "$path"account_dragon.sql
 
 node ./bin/insertTraits.js
 # end
