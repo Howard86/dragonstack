@@ -8,12 +8,12 @@ For any of these, I’d love to see your code on Github! Feel free to fork https
 
 #### Frontend
 
-1. Display the Account Balance, Id, Username, and Log Out Button in a header that stays at the top of app across all pages.
-2. Generate action type values with a helper function. This is a level of abstraction we don’t need in the course. But perfect material for a challenge!
+1. ~~Display the Account Balance, Id, Username, and Log Out Button in a header that stays at the top of app across all pages.~~
+2. ~~Generate action type values with a helper function. This is a level of abstraction we don’t need in the course. But perfect material for a challenge!~~
 3. Use `moment-js` to display the generation expiration time more prettily.
 4. Implement a cancel button in the AccountDragonRow after editing.
-5. Color the input differently in AccountDragonRow when it’s disabled
-6. Stylize alert message pop ups.
+5. ~~Color the input differently in AccountDragonRow when it’s disabled~~
+6. ~~Stylize alert message pop ups.~~
 7. Make sure the dragon cannot be public until after a sale value has been given. Use a popup with the `alert()` function. Or use an alternate kind of blocking behavior.
 8. Add confirmation button to buy or mate with a dragon.
 
