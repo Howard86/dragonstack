@@ -11,7 +11,7 @@ const DEFAULT_DRAGON = {
   },
 };
 
-const dragonReducer = (state = { DEFAULT_DRAGON }, action) => {
+const dragonReducer = (state = DEFAULT_DRAGON, action) => {
   switch (action.type) {
     case DRAGON.FETCH:
       return { ...state, status: fetchStates.fetching };
