@@ -59,9 +59,9 @@ export class AuthForm extends Component {
           />
         </FormGroup>
         <div>
-          <Button onClick={this.login}>Log in</Button>
+          <Button className='button-padding' onClick={this.login}>Log in</Button>
           <span> or </span>
-          <Button onClick={this.signup}>Sign up</Button>
+          <Button className='button-padding' onClick={this.signup}>Sign up</Button>
         </div>
         <br />
         {this.Error && (

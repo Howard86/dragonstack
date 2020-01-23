@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { fetchPublicDragons } from '../actions/publicDragon';
 import { fetchAccountDragons } from '../actions/accountDragons';
 import PublicDragonRow from './PublicDragonRow';
@@ -14,7 +13,6 @@ class PublicDragons extends Component {
   render() {
     return (
       <div>
-        <Link to='/'>Home</Link>
         <h3>PublicDragons</h3>
         {this.props.publicDragons.dragons.map(dragon => {
           return (

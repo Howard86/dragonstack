@@ -22,7 +22,7 @@ class Dragon extends Component {
     }
     return (
       <div>
-        <Button onClick={this.props.fetchDragon}>New Dragon</Button>
+        <Button className='button-padding' onClick={this.props.fetchDragon}>New Dragon</Button>
         <br />
         {this.DragonView}
       </div>

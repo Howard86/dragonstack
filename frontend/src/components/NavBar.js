@@ -7,10 +7,14 @@ import { connect } from 'react-redux';
 import AccountInfo from './AccountInfo';
 
 class NavBar extends Component {
+  handleLogOut() {
+    this.props.logout;
+  }
+
   render() {
     return (
       <Container>
-        <Navbar expand='md' sticky='top'>
+        <Navbar expand='md' fixed='top' bg='light'>
           <Navbar.Brand>
             <Link to='/'>Dragon Stack</Link>
           </Navbar.Brand>
@@ -22,7 +26,11 @@ class NavBar extends Component {
                 <Nav.Link href='/public-dragons'>Public Dragons</Nav.Link>
                 <AccountInfo />
               </Nav>
-              <Button onClick={this.props.logout}>Log out</Button>
+              <Link to='/'>
+                <Button className='button-padding' onClick={this.props.logout}>
+                  Log out
+                </Button>
+              </Link>
             </Navbar.Collapse>
           )}
         </Navbar>

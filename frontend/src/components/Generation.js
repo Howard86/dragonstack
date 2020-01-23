@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchGeneration } from '../actions/generation';
 import fetchStates from '../reducers/fetchStates';
+import moment from 'moment';
 
 const MINIMUN_DELAY = 3000;
 
@@ -31,26 +32,23 @@ class Generation extends Component {
   };
 
   render() {
-    // console.log('this.props', this.props);
-
     const { generation } = this.props;
 
-    // if (generation.status === fetchStates.fetching) {
-    //   return <div>...</div>;
-    // }
+    // Use moment.js to format time message
+    const expirationTime = moment(new Date(generation.expiration)).format(
+      'h:mm:ss a',
+    );
 
     if (generation.status === fetchStates.error) {
       return <div>{generation.message}</div>;
     }
     return (
-      <div className="panel panel-primary">
-        <div className="panel-heading">
-          <h3 className="panel-title">
-            Generation {generation.generationId}. Expires on:
-          </h3>
+      <div className='card'>
+        <div className='card-heading'>
+          <h3 className='card-title'>Generation {generation.generationId}</h3>
         </div>
-        <div className="panel-body">
-          <h4>{new Date(generation.expiration).toString()}</h4>
+        <div className='card-body'>
+          <h4>Expires at {expirationTime}</h4>
         </div>
       </div>
     );

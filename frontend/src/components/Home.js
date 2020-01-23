@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Generation from './Generation';
 import Dragon from './Dragon';
-import AccountInfo from './AccountInfo';
+import { Jumbotron } from 'react-bootstrap';
 
 export class Home extends Component {
   render() {
     return (
       <>
-        <h2>Dragon Stack from React</h2>
-        <Generation />
-        <hr />
+        <Jumbotron>
+          <h1>Dragon Stack from React</h1>
+          <Generation />
+        </Jumbotron>
         <Dragon />
       </>
     );
