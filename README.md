@@ -1,4 +1,53 @@
-# dargonstack
+# Dragon Stack
+> E-commerce-ish site that provides dragon and interface to interact with them.
+
+## Introduction
+
+This is a [udemy course](https://www.udemy.com/course/full-stack/) to get a quick feel about full-stack development in Node & React.
+
+Key framework/tech/architecture include:
+
+1. Node.js
+   - Account with sessionString Auth
+   - OOP with SQL function to retrieve data from db (`node-pg`)
+   - Express server with web API to provide necessary info for frontend
+2. PostgreSQL
+   - Installed within `brew services`
+   - Initialization with `bash` scripts
+   - Basic schema
+3. React.js
+   - Basic styling with `bootstrap` and `react-bootstrap`
+   - Class Component
+   - Custom `redux` store
+   - Auth with cookies
+   - Parcel to bundle
+
+## TODO
+
+Based on tutorial materials, I am thinking of following modification for futural use.
+Feel free to comment and discuss possible improvement!
+> Crossed once done
+
+### Frontend
+
+1. Layout components
+2. Functional Component with hooks
+3. `redux-toolkit` to rewrite `redux` structure
+4. `material-ui` to rewrite styling
+
+### Backend
+1. Resolve promise chain hell with `async`/`await`
+2. Error Handling middleware
+3. `pg-promise` for better transaction
+4. SQL prepared statement
+5. cache apis
+
+### Others
+
+1. ~~Prettier~~
+2. Typescript
+3. Dockerfile
+4. `docker-compose` yml
 
 ## Final Course Challenges List
 
@@ -10,8 +59,8 @@ For any of these, I’d love to see your code on Github! Feel free to fork https
 
 1. ~~Display the Account Balance, Id, Username, and Log Out Button in a header that stays at the top of app across all pages.~~
 2. ~~Generate action type values with a helper function. This is a level of abstraction we don’t need in the course. But perfect material for a challenge!~~
-3. Use `moment-js` to display the generation expiration time more prettily.
-4. Implement a cancel button in the AccountDragonRow after editing.
+3. ~~Use `moment-js` to display the generation expiration time more prettily.~~
+4. ~~Implement a cancel button in the AccountDragonRow after editing~~
 5. ~~Color the input differently in AccountDragonRow when it’s disabled~~
 6. ~~Stylize alert message pop ups.~~
 7. Make sure the dragon cannot be public until after a sale value has been given. Use a popup with the `alert()` function. Or use an alternate kind of blocking behavior.
