@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 import history from './history';
 // Components
+import NavBar from './components/NavBar';
 import Root from './components/Root';
 import AccountDragons from './components/AccountDragons';
 import PublicDragons from './components/PublicDragons';
@@ -38,6 +39,7 @@ store.dispatch(fetchAuthenticated()).then(() => {
   render(
     <Provider store={store}>
       <Router history={history}>
+        <NavBar />
         <Switch>
           <Route exact path='/' component={Root} />
           <AuthRoute path='/account-dragons' component={AccountDragons} />

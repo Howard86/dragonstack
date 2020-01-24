@@ -153,7 +153,7 @@ router.post('/mate', (req, res, next) => {
       return DragonTable.storeDragon(dragon);
     })
     .then(({ dragonId }) => {
-      Promise.all([
+      return Promise.all([
         AccountTable.updateBalance({
           accountId: matronAccountId,
           value: -patronSireValue,

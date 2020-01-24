@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { NavDropdown } from 'react-bootstrap';
 import { fetchAccountInfo } from '../actions/accountInfo';
 
 class AccountInfo extends Component {
@@ -9,11 +10,14 @@ class AccountInfo extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Account Info</h3>
-        <div>Username: {this.props.accountInfo.username}</div>
-        <div>{this.props.accountInfo.balance}</div>
-      </div>
+      <NavDropdown title='Account Info' id='basic-nav-dropdown'>
+        <NavDropdown.Header>Username</NavDropdown.Header>
+        <NavDropdown.Item>{this.props.accountInfo.username}</NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item>
+          Balance: {this.props.accountInfo.balance}
+        </NavDropdown.Item>
+      </NavDropdown>
     );
   }
 }

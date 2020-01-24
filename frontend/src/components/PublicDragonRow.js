@@ -43,8 +43,8 @@ export default class PublicDragonRow extends Component {
           <span>Sire Value: {this.props.dragon.sireValue}</span>
         </div>
         <br />
-        <Button onClick={this.buy}>Buy</Button>
-        <Button onClick={this.toggleDisplayMatingOptions}>Sire</Button>
+        <Button className='button-padding' onClick={this.buy}>Buy</Button>
+        <Button className='button-padding' onClick={this.toggleDisplayMatingOptions}>Sire</Button>
         {this.state.displayMatingOptions ? (
           <MatingOptions patronDragonId={this.props.dragon.dragonId} />
         ) : (

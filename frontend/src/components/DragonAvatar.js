@@ -10,6 +10,8 @@ import {
   striped,
 } from '../assets';
 
+import { Badge, Card, Container } from 'react-bootstrap';
+
 const propertyMap = {
   backgroundColor: {
     black: '#263238',
@@ -23,6 +25,18 @@ const propertyMap = {
 };
 
 class DragonAvatar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.keyCount = 0;
+    this.getKey = this.getKey.bind(this);
+  }
+
+  // Get unique key for component
+  getKey() {
+    return this.keyCount++;
+  }
+
   get DragonImage() {
     const dragonPropertyMap = {};
 
@@ -67,15 +81,31 @@ class DragonAvatar extends Component {
     if (!dragonId) return <div></div>;
 
     return (
-      <div>
-        <span className='label label-default'>G{generationId}</span>
-
-        <span className='label label-success'>I{dragonId}</span>
-        <br />
-
-        {traits && traits.map(trait => trait.traitValue).join(', ')}
-        {this.DragonImage}
-      </div>
+      <Card style={{ width: '50vw', margin: 'auto' }}>
+        <Card.Header>
+          <Badge variant='primary'>G{generationId}</Badge>
+          <span> - </span>
+          <Badge variant='success'>I{dragonId}</Badge>
+        </Card.Header>
+        <Card.Body>
+          {this.DragonImage}
+          <Card.Text>
+            {traits &&
+              traits.map(trait => (
+                <Badge
+                  variant='light'
+                  style={{ margin: '5px' }}
+                  key={this.getKey()}
+                >
+                  {trait.traitValue}
+                </Badge>
+              ))}
+          </Card.Text>
+          {/* <div className='container'>
+            <div className='row justify-content-sm-center'></div>
+          </div> */}
+        </Card.Body>
+      </Card>
     );
   }
 }

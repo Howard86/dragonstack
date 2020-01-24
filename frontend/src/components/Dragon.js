@@ -22,7 +22,7 @@ class Dragon extends Component {
     }
     return (
       <div>
-        <Button onClick={this.props.fetchDragon}>New Dragon</Button>
+        <Button className='button-padding' onClick={this.props.fetchDragon}>New Dragon</Button>
         <br />
         {this.DragonView}
       </div>
@@ -35,11 +35,8 @@ class Dragon extends Component {
 //   return { dragon };
 // };
 
-const componentConnector = connect(
-  ({ dragon }) => ({ dragon: dragon.dragon }),
-  {
-    fetchDragon,
-  },
-);
+const componentConnector = connect(({ dragon }) => ({ dragon }), {
+  fetchDragon,
+});
 
 export default componentConnector(Dragon);

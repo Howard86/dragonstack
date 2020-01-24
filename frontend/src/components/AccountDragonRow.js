@@ -33,6 +33,8 @@ export default class AccountDragonRow extends Component {
     this.setState({
       edit: !this.state.edit,
       nickname: this.props.dragon.nickname,
+      saleValue: this.props.dragon.saleValue,
+      sireValue: this.props.dragon.sireValue,
     });
   };
 
@@ -67,15 +69,22 @@ export default class AccountDragonRow extends Component {
   get SaveButton() {
     return (
       <div>
-        <Button onClick={this.save}>Save</Button>
-        <br />
-        <Button onClick={this.cancel}>Cancel</Button>
+        <Button className='button-padding' onClick={this.save}>
+          Save
+        </Button>
+        <Button className='button-padding' onClick={this.cancel}>
+          Cancel
+        </Button>
       </div>
     );
   }
 
   get EditButton() {
-    return <Button onClick={this.toggleEdit}>Edit</Button>;
+    return (
+      <Button className='button-padding' onClick={this.toggleEdit}>
+        Edit
+      </Button>
+    );
   }
 
   render() {
@@ -91,20 +100,13 @@ export default class AccountDragonRow extends Component {
         />
         <div>
           <span>
-            Sale Value:{' '}
+            <span>Sale Value: </span>
             <input
               type='number'
               disabled={!this.state.edit}
               value={this.state.saleValue}
               onChange={this.updateSaleValue}
               className='account-dragon-row-input'
-            />
-            <span> </span>
-            <input
-              type='checkbox'
-              disabled={!this.state.edit}
-              checked={this.state.isPublic}
-              onChange={this.updateIsPublic}
             />
             <br />
             <span>Sire Value: </span>
@@ -113,8 +115,17 @@ export default class AccountDragonRow extends Component {
               disabled={!this.state.edit}
               value={this.state.sireValue}
               onChange={this.updateSireValue}
+              className='account-dragon-row-input'
             />
           </span>
+          <br />
+          <text>Public </text>
+          <input
+            type='checkbox'
+            disabled={!this.state.edit}
+            checked={this.state.isPublic}
+            onChange={this.updateIsPublic}
+          />
           <DragonAvatar dragon={this.props.dragon} />
           {this.state.edit ? this.SaveButton : this.EditButton}
         </div>
