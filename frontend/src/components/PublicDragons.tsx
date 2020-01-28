@@ -14,7 +14,7 @@ class PublicDragons extends Component<any> {
   render() {
     return (
       <div>
-        <h3>PublicDragons</h3>
+        <h3>Public Dragons</h3>
         {this.props.publicDragons.dragons.map(
           (dragon: { dragonId: string | number | undefined }) => {
             return (
