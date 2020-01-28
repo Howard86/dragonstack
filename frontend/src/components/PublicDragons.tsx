@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { fetchPublicDragons } from '../actions/publicDragon';
 import { fetchAccountDragons } from '../actions/accountDragons';
 import PublicDragonRow from './PublicDragonRow';
+import { RootState } from '../reducers';
 
-class PublicDragons extends Component {
+class PublicDragons extends Component<any> {
   componentDidMount() {
     this.props.fetchPublicDragons();
     this.props.fetchAccountDragons();
@@ -14,20 +15,22 @@ class PublicDragons extends Component {
     return (
       <div>
         <h3>PublicDragons</h3>
-        {this.props.publicDragons.dragons.map(dragon => {
-          return (
-            <div key={dragon.dragonId}>
-              <PublicDragonRow dragon={dragon} />
-              <hr />
-            </div>
-          );
-        })}
+        {this.props.publicDragons.dragons.map(
+          (dragon: { dragonId: string | number | undefined }) => {
+            return (
+              <div key={dragon.dragonId}>
+                <PublicDragonRow dragon={dragon} />
+                <hr />
+              </div>
+            );
+          },
+        )}
       </div>
     );
   }
 }
 
-export default connect(({ publicDragons }) => ({ publicDragons }), {
+export default connect(({ publicDragons }: RootState) => ({ publicDragons }), {
   fetchPublicDragons,
   fetchAccountDragons,
 })(PublicDragons);

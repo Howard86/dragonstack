@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchGeneration } from '../actions/generation';
-import fetchStates from '../reducers/fetchStates';
+import { fetchStates } from '../reducers/fetchStates';
 import moment from 'moment';
+import { RootState } from '../reducers';
 
 const MINIMUN_DELAY = 3000;
 
-class Generation extends Component {
-  timer = null;
+class Generation extends Component<any> {
+  timer: any;
 
   componentDidMount() {
     this.fetchNextGeneration();
@@ -55,7 +56,7 @@ class Generation extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: RootState) => {
   const generation = state.generation;
 
   return { generation };

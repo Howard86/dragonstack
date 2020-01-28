@@ -26,8 +26,8 @@ const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
 //   return <Redirect to={{ pathname: '/account-dragons' }} />;
 // };
 
-const AuthRoute = props => {
-  if (!store.getState().account.loggedIn) {
+const AuthRoute = (props: { component: any; path: any }) => {
+  if (!(store.getState().account as any).loggedIn) {
     return <Redirect to={{ pathname: '/' }} />;
   }
 
@@ -35,6 +35,7 @@ const AuthRoute = props => {
   return <Route path={path} component={component} />;
 };
 
+// TODO: Fix dispatch promise
 store.dispatch(fetchAuthenticated()).then(() => {
   render(
     <Provider store={store}>

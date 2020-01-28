@@ -1,9 +1,9 @@
+import { ActionProps, fetchStates } from './fetchStates';
 import { ACCOUNT } from '../actions/types';
-import fetchStates from './fetchStates';
 
 const DEFAULT_ACCOUNT = { loggedIn: false };
 
-const account = (state = DEFAULT_ACCOUNT, action) => {
+const account = (state = DEFAULT_ACCOUNT, action: ActionProps) => {
   switch (action.type) {
     case ACCOUNT.FETCH:
       return { ...state, status: fetchStates.fetching };

@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import { connect } from 'react-redux';
 import { Button, FormGroup, FormControl } from 'react-bootstrap';
 import { signup, login } from '../actions/account';
-import fetchStates from '../reducers/fetchStates';
+import { fetchStates } from '../reducers/fetchStates';
+import { RootState } from '../reducers';
 
-export class AuthForm extends Component {
+export class AuthForm extends Component<any> {
   state = { username: '', password: '', buttonClicked: false };
 
-  updateUsername = event => {
+  updateUsername = (event: FormEvent) => {
     this.setState({ username: event.target.value });
   };
 
-  updatePassword = event => {
+  updatePassword = (event: FormEvent) => {
     this.setState({ password: event.target.value });
   };
 
@@ -59,9 +60,13 @@ export class AuthForm extends Component {
           />
         </FormGroup>
         <div>
-          <Button className='button-padding' onClick={this.login}>Log in</Button>
+          <Button className='button-padding' onClick={this.login}>
+            Log in
+          </Button>
           <span> or </span>
-          <Button className='button-padding' onClick={this.signup}>Sign up</Button>
+          <Button className='button-padding' onClick={this.signup}>
+            Sign up
+          </Button>
         </div>
         <br />
         {this.Error && (
@@ -74,6 +79,7 @@ export class AuthForm extends Component {
   }
 }
 
-export default connect(({ account }) => ({ account }), { signup, login })(
-  AuthForm,
-);
+export default connect(({ account }: RootState) => ({ account }), {
+  signup,
+  login,
+})(AuthForm);

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavDropdown } from 'react-bootstrap';
 import { fetchAccountInfo } from '../actions/accountInfo';
+import { RootState } from '../reducers/index';
 
-class AccountInfo extends Component {
+class AccountInfo extends Component<any> {
   componentDidMount() {
     this.props.fetchAccountInfo();
   }
@@ -22,6 +23,6 @@ class AccountInfo extends Component {
   }
 }
 
-export default connect(({ accountInfo }) => ({ accountInfo }), {
+export default connect(({ accountInfo }: RootState) => ({ accountInfo }), {
   fetchAccountInfo,
 })(AccountInfo);
