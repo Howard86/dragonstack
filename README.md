@@ -34,8 +34,10 @@ Feel free to comment and discuss possible improvement!
 2. Functional Component with hooks
 3. `redux-toolkit` to rewrite `redux` structure
 4. `material-ui` to rewrite styling
+5. A separate API folder with `axios`
 
 ### Backend
+
 1. Resolve promise chain hell with `async`/`await`
 2. Error Handling middleware
 3. `pg-promise` for better transaction
@@ -45,7 +47,7 @@ Feel free to comment and discuss possible improvement!
 ### Others
 
 1. ~~Prettier~~
-2. Typescript
+2. ~~Typescript~~
 3. Dockerfile
 4. `docker-compose` yml
 
