@@ -6,7 +6,7 @@ import accountDragons from './accountDragons';
 import accountInfo from './accountInfo';
 import publicDragons from './publicDragons';
 
-export default combineReducers({
+const rootReducer = combineReducers({
   account,
   generation,
   dragon,
@@ -14,3 +14,6 @@ export default combineReducers({
   accountInfo,
   publicDragons,
 });
+
+export default rootReducer;
+export type RootState = ReturnType<typeof rootReducer>;

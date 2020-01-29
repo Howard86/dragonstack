@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchDragon } from '../actions/dragon';
-import fetchStates from '../reducers/fetchStates';
+import { fetchStates } from '../reducers/fetchStates';
 
 import { Button } from 'react-bootstrap';
 import DragonAvatar from './DragonAvatar';
+import { RootState } from '../reducers';
 
-class Dragon extends Component {
+class Dragon extends Component<any> {
   get DragonView() {
     const { dragon } = this.props;
     if (dragon.status === fetchStates.error)
@@ -22,7 +23,9 @@ class Dragon extends Component {
     }
     return (
       <div>
-        <Button className='button-padding' onClick={this.props.fetchDragon}>New Dragon</Button>
+        <Button className='button-padding' onClick={this.props.fetchDragon}>
+          New Dragon
+        </Button>
         <br />
         {this.DragonView}
       </div>
@@ -35,7 +38,7 @@ class Dragon extends Component {
 //   return { dragon };
 // };
 
-const componentConnector = connect(({ dragon }) => ({ dragon }), {
+const componentConnector = connect(({ dragon }: RootState) => ({ dragon }), {
   fetchDragon,
 });
 

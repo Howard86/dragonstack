@@ -1,13 +1,27 @@
 import { ACCOUNT } from './types';
 import { BACKEND } from '../config';
 
+interface AccountParams {
+  endpoint: string;
+  options: any;
+  FETCH_TYPE: string;
+  SUCCESS_TYPE: string;
+  ERROR_TYPE: string;
+}
+
+interface AccountProps {
+  username: string;
+  password: string;
+}
 export const fetchFromAccount = ({
   endpoint,
   options,
   FETCH_TYPE,
   SUCCESS_TYPE,
   ERROR_TYPE,
-}) => dispatch => {
+}: AccountParams) => (
+  dispatch: (arg0: { type?: string; message?: any }) => void,
+) => {
   dispatch({ type: FETCH_TYPE });
 
   return fetch(`${BACKEND.ADDRESS}/account/${endpoint} `, options)
@@ -23,7 +37,7 @@ export const fetchFromAccount = ({
     .catch(error => dispatch({ type: ERROR_TYPE, message: error.message }));
 };
 
-export const signup = ({ username, password }) =>
+export const signup = ({ username, password }: AccountProps) =>
   fetchFromAccount({
     endpoint: 'signup',
     options: {
@@ -50,7 +64,7 @@ export const logout = () =>
     SUCCESS_TYPE: ACCOUNT.FETCH_LOGOUT_SUCCESS,
   });
 
-export const login = ({ username, password }) =>
+export const login = ({ username, password }: AccountProps) =>
   fetchFromAccount({
     endpoint: 'login',
     options: {

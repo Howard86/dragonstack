@@ -1,7 +1,9 @@
 import { GENERATION } from './types';
 import { BACKEND } from '../config';
 
-export const fetchGeneration = () => dispatch => {
+export const fetchGeneration = () => (
+  dispatch: (arg0: { type?: string; message?: any; generation?: any }) => void,
+) => {
   dispatch({ type: GENERATION.FETCH });
 
   return fetch(`${BACKEND.ADDRESS}/generation`)

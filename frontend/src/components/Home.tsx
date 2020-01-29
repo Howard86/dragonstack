@@ -3,7 +3,7 @@ import Generation from './Generation';
 import Dragon from './Dragon';
 import { Jumbotron } from 'react-bootstrap';
 
-export class Home extends Component {
+export class Home extends Component<any> {
   render() {
     return (
       <>

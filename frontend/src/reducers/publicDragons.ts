@@ -1,9 +1,9 @@
 import { PUBLIC_DRAGONS } from '../actions/types';
-import fetchStates from './fetchStates';
+import { ActionProps, fetchStates } from './fetchStates';
 
 const DEFAULT_PUBLIC_DRAGONS = { dragons: [] };
 
-const publicDragons = (state = DEFAULT_PUBLIC_DRAGONS, action) => {
+const publicDragons = (state = DEFAULT_PUBLIC_DRAGONS, action: ActionProps) => {
   switch (action.type) {
     case PUBLIC_DRAGONS.FETCH:
       return { ...state, status: fetchStates.fetching };

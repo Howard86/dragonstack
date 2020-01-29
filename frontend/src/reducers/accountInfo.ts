@@ -1,7 +1,7 @@
 import { ACCOUNT_INFO } from '../actions/types';
-import fetchStates from './fetchStates';
+import { fetchStates, ActionProps } from './fetchStates';
 
-const accountInfo = (state = {}, action) => {
+const accountInfo = (state = {}, action: ActionProps) => {
   switch (action.type) {
     case ACCOUNT_INFO.FETCH:
       return { ...state, status: fetchStates.fetching };

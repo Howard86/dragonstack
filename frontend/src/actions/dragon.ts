@@ -1,7 +1,9 @@
 import { DRAGON } from './types';
 import { BACKEND } from '../config';
 
-export const fetchDragon = () => dispatch => {
+export const fetchDragon = () => (
+  dispatch: (arg0: { type: string; message?: any; dragon?: any }) => void,
+) => {
   dispatch({ type: DRAGON.FETCH });
 
   return fetch(`${BACKEND.ADDRESS}/dragon/new`, { credentials: 'include' })

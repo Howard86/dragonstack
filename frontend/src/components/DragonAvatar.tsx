@@ -10,7 +10,7 @@ import {
   striped,
 } from '../assets';
 
-import { Badge, Card, Container } from 'react-bootstrap';
+import { Badge, Card } from 'react-bootstrap';
 
 const propertyMap = {
   backgroundColor: {
@@ -24,8 +24,19 @@ const propertyMap = {
   size: { small: 100, medium: 140, large: 180, enormous: 220 },
 };
 
-class DragonAvatar extends Component {
-  constructor(props) {
+type TraitType = 'backgroundColor' | 'build' | 'pattern' | 'size';
+
+interface DragonPropertyMap {
+  backgroundColor?: string;
+  build?: string;
+  pattern?: string;
+  size?: string;
+}
+
+class DragonAvatar extends Component<any> {
+  keyCount: number;
+
+  constructor(props: any) {
     super(props);
 
     this.keyCount = 0;
@@ -38,15 +49,20 @@ class DragonAvatar extends Component {
   }
 
   get DragonImage() {
-    const dragonPropertyMap = {};
+    const dragonPropertyMap: DragonPropertyMap = {};
 
     const currentTraits = this.props.dragon.traits;
     if (currentTraits) {
-      currentTraits.forEach(trait => {
-        const { traitType, traitValue } = trait;
+      currentTraits.forEach(
+        (trait: { traitType: TraitType; traitValue: any }) => {
+          const { traitType, traitValue } = trait;
 
-        dragonPropertyMap[traitType] = propertyMap[traitType][traitValue];
-      });
+          // TODO: Fix any
+          dragonPropertyMap[traitType] = (propertyMap as any)[traitType][
+            traitValue
+          ];
+        },
+      );
     }
 
     const { backgroundColor, build, pattern, size } = dragonPropertyMap;
@@ -91,7 +107,7 @@ class DragonAvatar extends Component {
           {this.DragonImage}
           <Card.Text>
             {traits &&
-              traits.map(trait => (
+              traits.map((trait: { traitValue: React.ReactNode }) => (
                 <Badge
                   variant='light'
                   style={{ margin: '5px' }}
@@ -101,9 +117,6 @@ class DragonAvatar extends Component {
                 </Badge>
               ))}
           </Card.Text>
-          {/* <div className='container'>
-            <div className='row justify-content-sm-center'></div>
-          </div> */}
         </Card.Body>
       </Card>
     );

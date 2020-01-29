@@ -5,8 +5,9 @@ import { logout } from '../actions/account';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AccountInfo from './AccountInfo';
+import { RootState } from '../reducers/index';
 
-class NavBar extends Component {
+class NavBar extends Component<any> {
   handleLogOut() {
     this.props.logout;
   }
@@ -39,6 +40,10 @@ class NavBar extends Component {
   }
 }
 
-export default connect(({ account }) => ({ loggedIn: account.loggedIn }), {
-  logout,
-})(NavBar);
+// TODO: Fix any
+export default connect(
+  ({ account }: RootState) => ({ loggedIn: (account as any).loggedIn }),
+  {
+    logout,
+  },
+)(NavBar);

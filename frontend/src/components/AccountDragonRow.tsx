@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import DragonAvatar from './DragonAvatar';
 import { Button } from 'react-bootstrap';
 import { BACKEND } from '../config';
 
-export default class AccountDragonRow extends Component {
+export default class AccountDragonRow extends Component<any> {
   state = {
     nickname: this.props.dragon.nickname,
     isPublic: this.props.dragon.isPublic,
@@ -12,16 +12,16 @@ export default class AccountDragonRow extends Component {
     edit: false,
   };
 
-  updateNickname = event => {
+  updateNickname = (event: FormEvent) => {
     this.setState({ nickname: event.target.value });
   };
-  updateSaleValue = event => {
+  updateSaleValue = (event: FormEvent) => {
     this.setState({ saleValue: event.target.value });
   };
-  updateSireValue = event => {
+  updateSireValue = (event: FormEvent) => {
     this.setState({ sireValue: event.target.value });
   };
-  updateIsPublic = event => {
+  updateIsPublic = (event: FormEvent) => {
     this.setState({ isPublic: event.target.checked });
   };
 
