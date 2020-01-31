@@ -5,7 +5,7 @@ interface AccountParams {
   endpoint: string;
   options: any;
   FETCH_TYPE: string;
-  SUCCESS_TYPE: string;
+  SUCCESS_TYPE?: string;
   ERROR_TYPE: string;
 }
 
