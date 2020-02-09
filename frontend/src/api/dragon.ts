@@ -8,22 +8,6 @@ interface DragonData {
   dragon: Dragon;
 }
 
-interface Dragon {
-  dragonId: number;
-  generationId: number;
-  birthdate: string;
-  nickname: string;
-  traits: Array<TraitPair>;
-  isPublic: false;
-  saleValue: number;
-  sireValue: number;
-}
-
-interface TraitPair {
-  traitType: string;
-  traitValue: string;
-}
-
 const getNewDragon = async () => {
   try {
     const response = await axios.get<DragonData>(
