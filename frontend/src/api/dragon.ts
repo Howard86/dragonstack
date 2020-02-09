@@ -2,10 +2,12 @@ import axios from 'axios';
 import { BACKEND } from '../config';
 import handleRequestError from './helper';
 
-interface DragonData {
-  type: string;
-  message: string;
+interface DragonData extends ApiDefaultResponse {
   dragon: Dragon;
+}
+
+interface DragonsData extends ApiDefaultResponse {
+  dragons: Array<Dragon>;
 }
 
 const getNewDragon = async () => {
@@ -26,7 +28,7 @@ const getNewDragon = async () => {
 
 const getPublicDragons = async () => {
   try {
-    const response = await axios.get<Array<DragonData>>(
+    const response = await axios.get<DragonsData>(
       `${BACKEND.ADDRESS}/dragon/public-dragons`,
     );
     return response;

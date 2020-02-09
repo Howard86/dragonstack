@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { reducer as newDragon } from './newDragon';
+import { reducer as dragon } from './dragon';
 
-const rootReducer = combineReducers({ newDragon });
+const rootReducer = combineReducers({ dragon });
 
 export type RootState = ReturnType<typeof rootReducer>;
 
