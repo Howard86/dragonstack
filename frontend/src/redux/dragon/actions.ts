@@ -2,8 +2,7 @@ import { AppThunk, AppThunkDispatch } from '../store';
 
 import { actions } from './index';
 
-// TODO: fix ts module resolution
-import { getNewDragon, getPublicDragons } from '../../api/dragon';
+import { getNewDragon, getPublicDragons } from 'api/dragon';
 import { AxiosResponse } from 'axios';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 

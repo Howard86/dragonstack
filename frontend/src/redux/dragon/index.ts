@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getNewDragon } from '../../api/dragon';
-import { AppThunk, AppThunkDispatch } from '../store';
+import { getNewDragon } from 'api/dragon';
+import { AppThunk, AppThunkDispatch } from 'redux/store';
 
 // export interface DragonState extends Dragon {
 //   status: FetchStates;
@@ -52,26 +52,5 @@ const dragonSlice = createSlice({
 });
 
 const { actions, reducer } = dragonSlice;
-
-const getNewDragonAction: AppThunk = () => async (
-  dispatch: AppThunkDispatch<null>,
-) => {
-  dispatch(actions.fetch());
-  try {
-    const response = await getNewDragon();
-    if (response.status >= 400) {
-      dispatch(
-        actions.fetchError({
-          message: response.statusText,
-        }),
-      );
-    } else {
-      dispatch(actions.fetchNewDragonSuccess(response?.data?.dragon));
-    }
-  } catch (error) {
-    const { message } = error;
-    dispatch(actions.fetchError({ message }));
-  }
-};
 
 export { reducer, actions };
