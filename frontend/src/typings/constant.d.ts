@@ -1,4 +1,5 @@
-declare const enum FetchStates {
+enum FetchStates {
+  NONE = '',
   INIT = 'init',
   FETCHING = 'fetching',
   ERROR = 'error',

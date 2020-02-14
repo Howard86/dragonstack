@@ -4,7 +4,7 @@ import handleRequestError from './helper';
 
 const signup = async (username: string, password: string) => {
   try {
-    const response = await axios.post(
+    const response = await axios.post<UserAccount>(
       `${BACKEND.ADDRESS}/account/signup`,
       { username, password },
       {
@@ -21,10 +21,13 @@ const signup = async (username: string, password: string) => {
 
 const logout = async () => {
   try {
-    const response = await axios.get(`${BACKEND.ADDRESS}/account/logout`, {
-      withCredentials: true,
-      // validateStatus: status => status < 500,
-    });
+    const response = await axios.get<UserAccount>(
+      `${BACKEND.ADDRESS}/account/logout`,
+      {
+        withCredentials: true,
+        // validateStatus: status => status < 500,
+      },
+    );
     return response;
   } catch (error) {
     handleRequestError(error);
@@ -34,7 +37,7 @@ const logout = async () => {
 
 const login = async (username: string, password: string) => {
   try {
-    const response = await axios.post(
+    const response = await axios.post<UserAccount>(
       `${BACKEND.ADDRESS}/account/login`,
       { username, password },
       {
@@ -51,7 +54,7 @@ const login = async (username: string, password: string) => {
 
 const fetchAuthenticated = async () => {
   try {
-    const response = await axios.get(
+    const response = await axios.get<UserAccount>(
       `${BACKEND.ADDRESS}/account/authenticated`,
       {
         withCredentials: true,
@@ -67,10 +70,13 @@ const fetchAuthenticated = async () => {
 
 const fetchAccountDragons = async () => {
   try {
-    const response = await axios.get(`${BACKEND.ADDRESS}/account/dragons`, {
-      withCredentials: true,
-      // validateStatus: status => status < 500,
-    });
+    const response = await axios.get<Array<Dragon>>(
+      `${BACKEND.ADDRESS}/account/dragons`,
+      {
+        withCredentials: true,
+        // validateStatus: status => status < 500,
+      },
+    );
     return response;
   } catch (error) {
     handleRequestError(error);
@@ -80,10 +86,13 @@ const fetchAccountDragons = async () => {
 
 const fetchAccountInfo = async () => {
   try {
-    const response = await axios.get(`${BACKEND.ADDRESS}/account/info`, {
-      withCredentials: true,
-      // validateStatus: status => status < 500,
-    });
+    const response = await axios.get<UserAccount>(
+      `${BACKEND.ADDRESS}/account/info`,
+      {
+        withCredentials: true,
+        // validateStatus: status => status < 500,
+      },
+    );
     return response;
   } catch (error) {
     handleRequestError(error);

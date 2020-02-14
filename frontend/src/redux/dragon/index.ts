@@ -1,11 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getNewDragon } from 'api/dragon';
-import { AppThunk, AppThunkDispatch } from 'redux/store';
-
-// export interface DragonState extends Dragon {
-//   status: FetchStates;
-//   message?: string;
-// }
 export interface DragonState extends StateWise {
   newDragon?: Dragon;
   publicDragons?: Array<Dragon>;
@@ -33,20 +26,20 @@ const dragonSlice = createSlice({
   name: 'dragon',
   initialState: DEFAULT_DRAGON,
   reducers: {
-    fetch(state): void {
-      state.status = FetchStates.FETCHING;
+    fetch(draft): void {
+      draft.status = FetchStates.FETCHING;
     },
-    fetchError(state, action: PayloadAction<{ message: string }>): void {
-      state.status = FetchStates.ERROR;
-      state.message = action.payload.message;
+    fetchError(draft, action: PayloadAction<{ message: string }>): void {
+      draft.status = FetchStates.ERROR;
+      draft.message = action.payload.message;
     },
-    fetchNewDragonSuccess(state, action: PayloadAction<Dragon>) {
-      state.status = FetchStates.SUCCESS;
-      state.newDragon = action.payload;
+    fetchNewDragonSuccess(draft, action: PayloadAction<Dragon>) {
+      draft.status = FetchStates.SUCCESS;
+      draft.newDragon = action.payload;
     },
-    fetchPublicDragonsSuccess(state, action: PayloadAction<Array<Dragon>>) {
-      state.status = FetchStates.SUCCESS;
-      state.publicDragons = action.payload;
+    fetchPublicDragonsSuccess(draft, action: PayloadAction<Array<Dragon>>) {
+      draft.status = FetchStates.SUCCESS;
+      draft.publicDragons = action.payload;
     },
   },
 });

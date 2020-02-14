@@ -1,10 +1,8 @@
-import { AppThunk, AppThunkDispatch } from '../store';
+import { AppThunk, AppThunkDispatch } from 'redux/store';
 
 import { actions } from './index';
 
 import { getNewDragon, getPublicDragons } from 'api/dragon';
-import { AxiosResponse } from 'axios';
-import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 
 // ! Abstracted functions are too complicated
 // const getDragonActions = (
