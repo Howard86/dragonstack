@@ -7,4 +7,28 @@ import plain from './plain.png';
 import spotted from './spotted.png';
 import striped from './striped.png';
 
-export { skinny, slender, sporty, stocky, patchy, plain, spotted, striped };
+const dragonBuild = {
+  slender,
+  stocky,
+  sporty,
+  skinny,
+};
+const dragonPattern = {
+  plain,
+  striped,
+  spotted,
+  patchy,
+};
+
+export {
+  skinny,
+  slender,
+  sporty,
+  stocky,
+  patchy,
+  plain,
+  spotted,
+  striped,
+  dragonBuild,
+  dragonPattern,
+};

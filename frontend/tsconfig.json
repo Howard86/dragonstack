@@ -28,7 +28,7 @@
 
     /* Strict Type-Checking Options */
     "strict": true /* Enable all strict type-checking options. */,
-    // "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
+    "noImplicitAny": false /* Raise error on expressions and declarations with an implied 'any' type. */,
     // "strictNullChecks": true,              /* Enable strict null checks. */
     // "strictFunctionTypes": true,           /* Enable strict checking of function types. */
     // "strictBindCallApply": true,           /* Enable strict 'bind', 'call', and 'apply' methods on functions. */
@@ -48,13 +48,15 @@
     "paths": {
       "api/*": ["api/*"],
       "assets/*": ["assets/*"],
-      "components/*": ["components/*"],
+      "constants/*": ["constants/*"],
       "container/*": ["container/*"],
-      "redux/*": ["redux/*"]
+      "components/*": ["components/*"],
+      "pages/*": ["pages/*"],
+      "store/*": ["store/*"]
     } /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */,
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     "typeRoots": [
-      "./typings",
+      "src/typingss",
       "../node_modules/@types"
     ] /* List of folders to include type definitions from. */,
     "types": [
@@ -77,11 +79,13 @@
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
 
     /* Advanced Options */
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true
     /* Disallow inconsistently-cased references to the same file.
-     */ "skipLibCheck": true
+     */
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.scss", "**/*.d.ts", "**/*.sass"],
-  "exclude": ["node_modules", "dist", ".cache"],
-  "extends": "./node_modules/react-redux-typescript-scripts/tsconfig.json"
+  "include": ["./src/**/*", "../typings"],
+  "exclude": ["node_modules", "dist", ".cache", "*.config.js"],
+  "awesomeTypescriptLoaderOptions": {
+    "reportFiles": ["./src/**/*"]
+  }
 }

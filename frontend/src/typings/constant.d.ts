@@ -1,14 +1,12 @@
-enum FetchStates {
-  NONE = '',
-  INIT = 'init',
-  FETCHING = 'fetching',
-  ERROR = 'error',
-  SUCCESS = 'success',
-  NOTFOUND = 'notFound',
-}
-
+type FetchStatesType =
+  | 'none'
+  | 'init'
+  | 'fetching'
+  | 'error'
+  | 'success'
+  | 'notFound';
 interface StateWise {
-  status: FetchStates;
+  status: FetchStatesType;
   message?: string;
 }
 

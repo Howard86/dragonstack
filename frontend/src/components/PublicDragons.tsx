@@ -1,36 +1,31 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchPublicDragons } from '../actions/publicDragon';
-import { fetchAccountDragons } from '../actions/accountDragons';
+import React, { FC, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { RootState } from 'store/reducers';
+import { getAccountDragonsAction } from 'store/userAccount/actions';
+import { getPublicDragonsAction } from 'store/dragon/actions';
 import PublicDragonRow from './PublicDragonRow';
-import { RootState } from '../reducers';
 
-class PublicDragons extends Component<any> {
-  componentDidMount() {
-    this.props.fetchPublicDragons();
-    this.props.fetchAccountDragons();
-  }
+const PublicDragons: FC = () => {
+  const dispatch = useDispatch();
+  const { publicDragons } = useSelector(({ dragon }: RootState) => dragon);
 
-  render() {
-    return (
-      <div>
-        <h3>Public Dragons</h3>
-        {this.props.publicDragons.dragons.map(
-          (dragon: { dragonId: string | number | undefined }) => {
-            return (
-              <div key={dragon.dragonId}>
-                <PublicDragonRow dragon={dragon} />
-                <hr />
-              </div>
-            );
-          },
-        )}
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    dispatch(getPublicDragonsAction());
+    dispatch(getAccountDragonsAction());
+  }, [dispatch]);
 
-export default connect(({ publicDragons }: RootState) => ({ publicDragons }), {
-  fetchPublicDragons,
-  fetchAccountDragons,
-})(PublicDragons);
+  return (
+    <>
+      <h3>Public Dragons</h3>
+      {publicDragons.map(dragon => (
+        <div key={dragon.dragonId}>
+          <PublicDragonRow {...dragon} />
+          <hr />
+        </div>
+      ))}
+    </>
+  );
+};
+
+export default PublicDragons;
