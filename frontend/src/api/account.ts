@@ -70,7 +70,7 @@ const fetchAuthenticated = async () => {
 
 const fetchAccountDragons = async () => {
   try {
-    const response = await axios.get<Array<Dragon>>(
+    const response = await axios.get<{ dragons: Array<Dragon> }>(
       `${BACKEND.ADDRESS}/account/dragons`,
       {
         withCredentials: true,

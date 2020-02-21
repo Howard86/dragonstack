@@ -43,12 +43,9 @@ const userAccountSlice = createSlice({
         ...action.payload,
       };
     },
-    fetchDragonsSuccess(
-      draft,
-      action: PayloadAction<{ dragons: Array<Dragon> }>,
-    ) {
+    fetchDragonsSuccess(draft, action: PayloadAction<Array<Dragon>>) {
       draft.status = FetchStates.SUCCESS;
-      draft.dragons = action.payload.dragons;
+      draft.dragons = action.payload;
     },
   },
 });

@@ -31,11 +31,11 @@ Feel free to comment and discuss possible improvement!
 ### Frontend
 
 1. Layout components
-2. Functional Component with hooks
-3. `redux-toolkit` to rewrite `redux` structure
+2. ~~Functional Component with hooks~~
+3. ~~`redux-toolkit` to rewrite `redux` structure~~
 4. `material-ui` to rewrite styling
-5. A separate API folder with `axios`
-6. Webpack for faster bundle (modified from [vikpe/react-webpack-typescript-starter](https://github.com/vikpe/react-webpack-typescript-starter))
+5. ~~A separate API folder with `axios`~~
+6. ~~Webpack for faster bundle~~ (modified from [vikpe/react-webpack-typescript-starter](https://github.com/vikpe/react-webpack-typescript-starter))
 
 ### Backend
 

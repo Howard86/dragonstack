@@ -11,8 +11,7 @@
   },
   "lint-staged": {
     "src/**/*.(ts|tsx)": [
-      "yarn lint:r:fix",
-      "git add"
+      "yarn lint"
     ]
   },
   "scripts": {
@@ -23,14 +22,11 @@
     "start": "yarn start-dev",
     "start-dev": "webpack-dev-server --config=configs/webpack/dev.js",
     "start-prod": "yarn run build && node express.js",
-    "lint:r": "eslint . --ext .ts,.tsx",
-    "lint:r:fix": "yarn lint:r -- --fix",
     "clean": "rm -rf dist .cache"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "typings": "./src/typings/*.d.ts",
   "dependencies": {
     "@reduxjs/toolkit": "^1.2.3",
     "axios": "^0.19.2",

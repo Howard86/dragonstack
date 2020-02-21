@@ -103,8 +103,8 @@ const getAccountDragonsAction = () => async (
     if (response.status >= 400) {
       dispatch(actions.fetchError({ message: response.statusText }));
     } else {
-      const dragons = response.data;
-      dispatch(actions.fetchDragonsSuccess({ dragons }));
+      const { dragons } = response.data;
+      dispatch(actions.fetchDragonsSuccess(dragons));
     }
   } catch (error) {
     const { message } = error;

@@ -24,8 +24,12 @@ const NavBar = () => {
         {loggedIn && (
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='mr-auto'>
-              <Nav.Link href='/account-dragons'>Account Dragons</Nav.Link>
-              <Nav.Link href='/public-dragons'>Public Dragons</Nav.Link>
+              <Nav.Link>
+                <Link to='/account-dragons'>Account Dragons</Link>
+              </Nav.Link>
+              <Nav.Link>
+                <Link to='/public-dragons'>Public Dragons</Link>
+              </Nav.Link>
               <AccountInfo />
             </Nav>
             <Link to='/'>
