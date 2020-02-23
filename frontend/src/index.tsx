@@ -1,53 +1,56 @@
-import React from 'react';
-import { createStore, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
-import { Router, Switch, Route, Redirect } from 'react-router-dom';
+import React, { useEffect, FC } from 'react';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { render } from 'react-dom';
-import thunk from 'redux-thunk';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
-import rootReducer from './reducers';
-import history from './history';
 // Components
+import Root from 'pages/Root';
+import AccountDragons from 'components/AccountDragons/Index';
+import PublicDragons from 'components/PublicDragons';
 import NavBar from './components/NavBar';
-import Root from './components/Root';
-import AccountDragons from './components/AccountDragons';
-import PublicDragons from './components/PublicDragons';
 
-import { fetchAuthenticated } from './actions/account';
 import './index.css';
+import customStore from 'store';
+import { RootState } from 'store/reducers';
+import { authenticateAction } from 'store/userAccount/actions';
 
-// External fixes:
-// https://github.com/jhen0409/react-native-debugger/issues/280
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
-
-// const RedirectToAccountDragons = () => {
-//   return <Redirect to={{ pathname: '/account-dragons' }} />;
-// };
-
-const AuthRoute = (props: { component: any; path: any }) => {
-  if (!(store.getState().account as any).loggedIn) {
-    return <Redirect to={{ pathname: '/' }} />;
-  }
-
+const AuthRoute = props => {
   const { component, path } = props;
-  return <Route path={path} component={component} />;
+  const { loggedIn } = useSelector(({ userAccount }: RootState) => userAccount);
+
+  return loggedIn ? (
+    <Route path={path} component={component} />
+  ) : (
+    <Redirect to={{ pathname: '/' }} />
+  );
 };
 
-// TODO: Fix dispatch promise
-store.dispatch(fetchAuthenticated()).then(() => {
-  render(
-    <Provider store={store}>
-      <Router history={history}>
-        <NavBar />
-        <Switch>
-          <Route exact path='/' component={Root} />
-          <AuthRoute path='/account-dragons' component={AccountDragons} />
-          <AuthRoute path='/public-dragons' component={PublicDragons} />
-        </Switch>
-      </Router>
-    </Provider>,
-    document.getElementById('root'),
+const App: FC = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(authenticateAction());
+  }, []);
+
+  return (
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route exact path='/' component={Root} />
+        <AuthRoute path='/account-dragons' component={AccountDragons} />
+        <AuthRoute path='/public-dragons' component={PublicDragons} />
+      </Switch>
+    </Router>
   );
-});
+};
+
+render(
+  <Provider store={customStore}>
+    <App />
+  </Provider>,
+  document.getElementById('root'),
+);

@@ -1,49 +1,55 @@
-import { Navbar, Nav, NavDropdown, Button, Container } from 'react-bootstrap';
-import { Link, NavLink } from 'react-router-dom';
-import { logout } from '../actions/account';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import {
+  Navbar as ReactNavBar,
+  Nav,
+  Button,
+  Container,
+  NavItem,
+} from 'react-bootstrap';
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import AccountInfo from './AccountInfo';
-import { RootState } from '../reducers/index';
+import AccountInfo from 'components/Account/AccountInfo';
+import { logoutAction } from 'store/userAccount/actions';
+import { RootState } from 'store/reducers';
 
-class NavBar extends Component<any> {
-  handleLogOut() {
-    this.props.logout;
-  }
+const { Brand, Toggle, Collapse } = ReactNavBar;
 
-  render() {
-    return (
-      <Container>
-        <Navbar expand='md' fixed='top' bg='light'>
-          <Navbar.Brand>
-            <Link to='/'>Dragon Stack</Link>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-          {this.props.loggedIn && (
-            <Navbar.Collapse id='basic-navbar-nav'>
-              <Nav className='mr-auto'>
-                <Nav.Link href='/account-dragons'>Account Dragons</Nav.Link>
-                <Nav.Link href='/public-dragons'>Public Dragons</Nav.Link>
-                <AccountInfo />
-              </Nav>
-              <Link to='/'>
-                <Button className='button-padding' onClick={this.props.logout}>
-                  Log out
-                </Button>
-              </Link>
-            </Navbar.Collapse>
-          )}
-        </Navbar>
-      </Container>
-    );
-  }
-}
+const NavBar = () => {
+  const dispatch = useDispatch();
+  const { loggedIn } = useSelector(({ userAccount }: RootState) => userAccount);
+  const logout = useCallback(() => {
+    dispatch(logoutAction());
+  }, [dispatch]);
 
-// TODO: Fix any
-export default connect(
-  ({ account }: RootState) => ({ loggedIn: (account as any).loggedIn }),
-  {
-    logout,
-  },
-)(NavBar);
+  return (
+    <Container>
+      <ReactNavBar expand='md' fixed='top' bg='light'>
+        <Brand>
+          <Link to='/'>Dragon Stack</Link>
+        </Brand>
+        <Toggle aria-controls='basic-navbar-nav' />
+        {loggedIn && (
+          <Collapse id='basic-navbar-nav'>
+            <Nav className='mr-auto'>
+              <NavItem>
+                <Link to='/account-dragons'>Account Dragons</Link>
+              </NavItem>
+              <NavItem>
+                <Link to='/public-dragons'>Public Dragons</Link>
+              </NavItem>
+              <AccountInfo />
+            </Nav>
+            <Link to='/'>
+              <Button className='button-padding' onClick={logout}>
+                Log out
+              </Button>
+            </Link>
+          </Collapse>
+        )}
+      </ReactNavBar>
+    </Container>
+  );
+};
+
+export default NavBar;
