@@ -119,8 +119,8 @@ const getAccountInfoAction = () => async (dispatch: AppThunkDispatch<null>) => {
     if (response.status >= 400) {
       dispatch(actions.fetchError({ message: response.statusText }));
     } else {
-      const { data } = response;
-      dispatch(actions.fetchInfoSuccess({ ...data }));
+      const { info } = response.data;
+      dispatch(actions.fetchInfoSuccess({ ...info }));
     }
   } catch (error) {
     const { message } = error;

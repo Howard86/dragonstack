@@ -41,6 +41,7 @@ const getNewDragonAction = () => async (dispatch: AppThunkDispatch<null>) => {
   try {
     const response = await getNewDragon();
     const dragon = response?.data?.dragon;
+
     if (response.status >= 400) {
       dispatch(
         actions.fetchError({

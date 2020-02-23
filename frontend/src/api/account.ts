@@ -86,7 +86,7 @@ const fetchAccountDragons = async () => {
 
 const fetchAccountInfo = async () => {
   try {
-    const response = await axios.get<UserAccount>(
+    const response = await axios.get<{ info: UserAccount }>(
       `${BACKEND.ADDRESS}/account/info`,
       {
         withCredentials: true,

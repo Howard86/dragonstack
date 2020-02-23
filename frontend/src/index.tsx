@@ -10,7 +10,7 @@ import {
 
 // Components
 import Root from 'pages/Root';
-import AccountDragons from 'components/AccountDragons';
+import AccountDragons from 'components/AccountDragons/Index';
 import PublicDragons from 'components/PublicDragons';
 import NavBar from './components/NavBar';
 

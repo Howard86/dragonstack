@@ -39,11 +39,7 @@ const AccountDragonRow: FC<Dragon> = (dragon: Dragon) => {
         isPublic,
       });
 
-      if (response.status >= 400) {
-        alert(response.statusText);
-      } else {
-        toggleEdit;
-      }
+      toggleEdit();
     } catch (error) {
       alert(error.message);
     }
@@ -111,8 +107,9 @@ const AccountDragonRow: FC<Dragon> = (dragon: Dragon) => {
           checked={isPublic}
           onChange={updateIsPublic}
         />
+        <br />
+        {isEditing ? <SaveButton /> : <EditButton />}
         <DragonAvatar {...dragon} />
-        {isEditing ? SaveButton : EditButton}
       </div>
       <br />
     </>
