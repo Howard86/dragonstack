@@ -19,24 +19,26 @@ export class DragonController {
     const generationId = this.generationEngineService.generation.id;
     const createdDragon = new CreateDragonDto(generationId);
     const dragon = await this.dragonService.create(createdDragon);
+
     // FIXME: temp fix
     const accountId = 2;
     const account = await this.accountService.findById(accountId);
     account.dragons.push(dragon);
-
     await this.accountService.save(account);
 
+    console.log('dragon', dragon);
     return dragon;
   }
 
-  @Put()
+  @Put('update')
   async updateDragon(@Body() dragon: UpdateDragonDto) {
-    await this.dragonService.update(dragon);
+    const ok = await this.dragonService.update(dragon);
+    return { ok, data: dragon };
   }
 
   @Get('public-dragons')
-  async getPublicDragons() {
-    await this.dragonService.getPublicDragons();
+  getPublicDragons() {
+    return this.dragonService.getPublicDragons();
   }
 
   @Post('buy')

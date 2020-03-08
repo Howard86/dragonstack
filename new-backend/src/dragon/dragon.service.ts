@@ -38,10 +38,11 @@ export class DragonService {
     return this.dragonRepository.findOne(dragonId);
   }
 
-  async update(updateDragonDto: UpdateDragonDto): Promise<void> {
+  // TODO: Fix ok response
+  async update(updateDragonDto: UpdateDragonDto): Promise<boolean> {
     const { id, ...updatedValues } = updateDragonDto;
-
-    await this.dragonRepository.update(id, updatedValues);
+    const { affected } = await this.dragonRepository.update(id, updatedValues);
+    return affected > 0;
   }
 
   async getPublicDragons(): Promise<Dragon[]> {
