@@ -17,7 +17,8 @@ export class GenerationService {
     return this.generationRepository.save(generation);
   }
 
-  findOne(): Promise<Generation> {
-    return this.generationRepository.findOne();
+  async getLastGeneration(): Promise<Generation> {
+    const generations = await this.generationRepository.find();
+    return generations[generations.length - 1];
   }
 }
