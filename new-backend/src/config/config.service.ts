@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
+require('dotenv').config();
 @Injectable()
 export class ConfigService {
-  constructor(private env: { [key: string]: string | undefined }) {}
+  constructor(private readonly env = process.env) {}
 
   private getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
@@ -14,21 +15,16 @@ export class ConfigService {
     return value;
   }
 
-  public ensureValues(keys: string[]) {
-    keys.forEach(key => this.getValue(key, true));
-    return this;
-  }
-
-  public getPort() {
+  getPort() {
     return this.getValue('PORT', true);
   }
 
-  public isProduction() {
+  isProduction() {
     const mode = this.getValue('MODE', false);
     return mode === 'PROD';
   }
 
-  public getTypeOrmConfig(): TypeOrmModuleOptions {
+  getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
       type: 'postgres',
 
@@ -47,6 +43,13 @@ export class ConfigService {
 
       ssl: this.isProduction(),
       synchronize: !this.isProduction(),
+    };
+  }
+
+  getJwtConfig() {
+    return {
+      secret: this.getValue('JWT_SECRET'),
+      expiresIn: parseInt(this.getValue('JWT_EXPIRES_IN')),
     };
   }
 }

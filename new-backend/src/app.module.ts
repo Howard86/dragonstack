@@ -8,8 +8,7 @@ import { AccountModule } from './account/account.module';
 import { GenerationModule } from './generation/generation.module';
 import { DragonModule } from './dragon/dragon.module';
 import { TaskModule } from './task/task.module';
-
-require('dotenv').config();
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +18,7 @@ require('dotenv').config();
     GenerationModule,
     DragonModule,
     TaskModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
