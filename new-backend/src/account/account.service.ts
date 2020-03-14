@@ -11,10 +11,10 @@ export class AccountService {
     private readonly accountRepository: Repository<Account>,
   ) {}
 
-  create(createAccountDto: CreateAccountDto): Promise<Account> {
+  create(username: string, password: string): Promise<Account> {
     const account = new Account();
-    account.username = createAccountDto.username;
-    account.password = createAccountDto.password;
+    account.username = username;
+    account.password = password;
 
     return this.accountRepository.save(account);
   }
