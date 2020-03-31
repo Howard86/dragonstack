@@ -17,10 +17,10 @@ const getRandomTraits = (): Trait[] => {
 };
 
 export class CreateDragonDto {
-  nickname: string = 'unnamed';
+  nickname = 'unnamed';
   birthdate: Date = new Date();
   traits: Trait[] = getRandomTraits();
-  isPublic: boolean = false;
+  isPublic = false;
   saleValue: number;
   sireValue: number;
 

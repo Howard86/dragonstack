@@ -31,7 +31,7 @@ export class AccountController {
     const { username, password } = req.body;
     const account = await this.authService.validateLocal(username, password);
 
-    let jwt: string = '';
+    let jwt = '';
     if (account) {
       const cookies = this.authService.generateJwt(account);
       (req as any)._cookies = cookies;
