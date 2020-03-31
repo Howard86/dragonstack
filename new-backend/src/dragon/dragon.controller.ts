@@ -1,28 +1,31 @@
-import { Controller, Get, Put, Body, Post } from '@nestjs/common';
+import { Controller, Get, Put, Body, Post, UseGuards } from '@nestjs/common';
+import { Cookies } from '@nestjsplus/cookies';
+
+import { AuthService } from '../auth/auth.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CreateDragonDto } from './dto/create-dragon.dto';
+import { UpdateDragonDto } from './dto/update-dragon.dto';
 import { DragonService } from './dragon.service';
 import { Dragon } from './dragon.entity';
 import { AccountService } from '../account/account.service';
-import { CreateDragonDto } from './dto/create-dragon.dto';
 import { GenerationEngineService } from '../generation/generation-engine.service';
-import { UpdateDragonDto } from './dto/update-dragon.dto';
 
 @Controller('dragon')
 export class DragonController {
   constructor(
     private readonly dragonService: DragonService,
     private readonly accountService: AccountService,
+    private readonly authService: AuthService,
     private readonly generationEngineService: GenerationEngineService,
   ) {}
 
-  @Get()
-  async getNewDragon(): Promise<Dragon> {
+  @UseGuards(JwtAuthGuard)
+  @Get('new')
+  async getNewDragon(@Cookies() cookies): Promise<Dragon> {
     const generationId = this.generationEngineService.generation.id;
     const createdDragon = new CreateDragonDto(generationId);
     const dragon = await this.dragonService.create(createdDragon);
-
-    // FIXME: temp fix
-    const accountId = 2;
-    const account = await this.accountService.findById(accountId);
+    const account = await this.authService.decodeCookies(cookies);
     account.dragons.push(dragon);
     await this.accountService.save(account);
 
@@ -30,20 +33,24 @@ export class DragonController {
     return dragon;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('update')
   async updateDragon(@Body() dragon: UpdateDragonDto) {
     const ok = await this.dragonService.update(dragon);
     return { ok, data: dragon };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('public-dragons')
   getPublicDragons() {
     return this.dragonService.getPublicDragons();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('buy')
   async buyDragon() {}
 
+  @UseGuards(JwtAuthGuard)
   @Post('mate')
   async mateDragon() {}
 }
