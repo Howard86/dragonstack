@@ -39,6 +39,7 @@ export class Dragon {
   @ManyToMany(
     type => Trait,
     trait => trait.dragons,
+    { eager: true },
   )
   @JoinTable()
   traits: Trait[];

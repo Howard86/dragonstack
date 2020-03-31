@@ -10,6 +10,7 @@ import { DragonController } from './dragon.controller';
 import { TraitModule } from '../trait/trait.module';
 import { AccountModule } from '../account/account.module';
 import { GenerationModule } from '../generation/generation.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { GenerationModule } from '../generation/generation.module';
     TraitModule,
     AccountModule,
     GenerationModule,
+    AuthModule,
   ],
   providers: [DragonService],
   controllers: [DragonController],
