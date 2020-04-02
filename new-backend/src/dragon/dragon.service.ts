@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Dragon } from './dragon.entity';
-import { Repository } from 'typeorm';
+import { Repository, Connection } from 'typeorm';
 import { CreateDragonDto } from './dto/create-dragon.dto';
 import { UpdateDragonDto } from './dto/update-dragon.dto';
 import { TraitService } from '../trait/trait.service';
 import { GenerationEngineService } from '../generation/generation-engine.service';
+import { Account } from '../account/account.entity';
 
 @Injectable()
 export class DragonService {
@@ -15,6 +16,7 @@ export class DragonService {
 
     private readonly generationEngineService: GenerationEngineService,
     private readonly traitService: TraitService,
+    private connection: Connection,
   ) {}
 
   async create(createDragonDto: CreateDragonDto): Promise<Dragon> {
@@ -47,5 +49,54 @@ export class DragonService {
 
   async getPublicDragons(): Promise<Dragon[]> {
     return this.dragonRepository.find({ isPublic: true });
+  }
+
+  // TODO: test this when frontend is ready
+  // Reference  https://docs.nestjs.com/techniques/database#transactions
+  async buyDragon(buyerId: number, dragonId: number) {
+    const queryRunner = this.connection.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    let result: boolean;
+    try {
+      const buyingDragon = await queryRunner.manager.findOne(Dragon, dragonId);
+
+      // ! Potential improvement when not using Many-to-Many relation
+      const sellerAccount = buyingDragon.accounts[0];
+      // FIXME: services should not have logic
+      if (sellerAccount.balance < buyingDragon.saleValue) {
+        throw new Error('balance not enough');
+      }
+
+      const buyerAccount = await queryRunner.manager.findOne(Account, buyerId);
+
+      // swap ownership
+      sellerAccount.dragons = sellerAccount.dragons.filter(dragon => {
+        dragon.id !== buyingDragon.id;
+      });
+      sellerAccount.balance += buyingDragon.saleValue;
+      buyerAccount.balance -= buyingDragon.saleValue;
+      buyerAccount.dragons.push(buyingDragon);
+      buyingDragon.isPublic = false;
+      buyingDragon.saleValue = 0;
+      buyingDragon.sireValue = 0;
+
+      await queryRunner.manager.save([
+        sellerAccount,
+        buyerAccount,
+        buyingDragon,
+      ]);
+
+      await queryRunner.commitTransaction();
+      result = true;
+    } catch (error) {
+      console.error(error);
+      result = false;
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
+    return result;
   }
 }
