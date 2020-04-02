@@ -9,6 +9,7 @@ import { DragonService } from './dragon.service';
 import { Dragon } from './dragon.entity';
 import { AccountService } from '../account/account.service';
 import { GenerationEngineService } from '../generation/generation-engine.service';
+import { BuyDragonDto } from './dto/buy-dragon.dto';
 
 @Controller('dragon')
 export class DragonController {
@@ -48,7 +49,13 @@ export class DragonController {
 
   @UseGuards(JwtAuthGuard)
   @Post('buy')
-  async buyDragon() {}
+  async buyDragon(@Body() buyParams: BuyDragonDto) {
+    const ok = await this.dragonService.buyDragon(
+      buyParams.buyerAccountId,
+      buyParams.dragonId,
+    );
+    return { ok };
+  }
 
   @UseGuards(JwtAuthGuard)
   @Post('mate')
