@@ -1,3 +1,5 @@
+import * as crypto from 'crypto';
+import { Exclude } from 'class-transformer';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -6,9 +8,8 @@ import {
   JoinTable,
   BeforeInsert,
 } from 'typeorm';
-import { Exclude } from 'class-transformer';
-import { Dragon } from '../dragon/dragon.entity';
-import * as crypto from 'crypto';
+
+import { Dragon } from 'src/dragon/dragon.entity';
 
 @Entity()
 export class Account {
@@ -34,7 +35,7 @@ export class Account {
   balance: number;
 
   @ManyToMany(
-    type => Dragon,
+    _type => Dragon,
     dragon => dragon.accounts,
     { eager: true },
   )

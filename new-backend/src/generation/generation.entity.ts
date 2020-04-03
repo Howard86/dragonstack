@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Dragon } from '../dragon/dragon.entity';
+
+import { Dragon } from 'src/dragon/dragon.entity';
 
 @Entity()
 export class Generation {
@@ -10,7 +11,7 @@ export class Generation {
   expiration: Date;
 
   @OneToMany(
-    type => Dragon,
+    _type => Dragon,
     dragon => dragon.generation,
   )
   dragons: Dragon[];

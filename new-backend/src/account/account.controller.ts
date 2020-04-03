@@ -1,7 +1,6 @@
 import {
   Controller,
   Post,
-  Body,
   Get,
   Param,
   Request,
@@ -11,10 +10,11 @@ import {
 } from '@nestjs/common';
 import { SetCookies, Cookies, ClearCookies } from '@nestjsplus/cookies';
 
-import { AccountService } from './account.service';
-import { Account } from './account.entity';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+
+import { AccountService } from './account.service';
+import { Account } from './account.entity';
 
 // TODO: Create custom cookie guard
 @Controller('account')

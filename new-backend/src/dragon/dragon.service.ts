@@ -1,12 +1,13 @@
+import { Repository, Connection } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+
+import { GenerationEngineService } from 'src/generation/generation-engine.service';
+import { Account } from 'src/account/account.entity';
+import { TraitService } from 'src/trait/trait.service';
+
+import { CreateDragonDto, UpdateDragonDto } from './dto';
 import { Dragon } from './dragon.entity';
-import { Repository, Connection } from 'typeorm';
-import { CreateDragonDto } from './dto/create-dragon.dto';
-import { UpdateDragonDto } from './dto/update-dragon.dto';
-import { TraitService } from '../trait/trait.service';
-import { GenerationEngineService } from '../generation/generation-engine.service';
-import { Account } from '../account/account.entity';
 
 @Injectable()
 export class DragonService {

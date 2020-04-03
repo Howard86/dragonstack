@@ -1,16 +1,19 @@
 import { Controller, Get, Put, Body, Post, UseGuards } from '@nestjs/common';
 import { Cookies } from '@nestjsplus/cookies';
 
-import { AuthService } from '../auth/auth.service';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { CreateDragonDto } from './dto/create-dragon.dto';
-import { UpdateDragonDto } from './dto/update-dragon.dto';
-import { DragonService } from './dragon.service';
+import { AuthService } from 'src/auth/auth.service';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { AccountService } from 'src/account/account.service';
+import { GenerationEngineService } from 'src/generation/generation-engine.service';
+
+import {
+  CreateDragonDto,
+  UpdateDragonDto,
+  BuyDragonDto,
+  MateDragonDto,
+} from './dto';
 import { Dragon } from './dragon.entity';
-import { AccountService } from '../account/account.service';
-import { GenerationEngineService } from '../generation/generation-engine.service';
-import { BuyDragonDto } from './dto/buy-dragon.dto';
-import { MateDragonDto } from './dto/mate-dragon.dto';
+import { DragonService } from './dragon.service';
 
 @Controller('dragon')
 export class DragonController {

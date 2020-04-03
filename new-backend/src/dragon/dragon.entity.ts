@@ -6,9 +6,10 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { Generation } from '../generation/generation.entity';
-import { Trait } from '../trait/trait.entity';
-import { Account } from '../account/account.entity';
+
+import { Generation } from 'src/generation/generation.entity';
+import { Trait } from 'src/trait/trait.entity';
+import { Account } from 'src/account/account.entity';
 
 @Entity()
 export class Dragon {
@@ -31,13 +32,13 @@ export class Dragon {
   sireValue: number;
 
   @ManyToOne(
-    type => Generation,
+    _type => Generation,
     generation => generation.dragons,
   )
   generation: Generation;
 
   @ManyToMany(
-    type => Trait,
+    _type => Trait,
     trait => trait.dragons,
     { eager: true },
   )
@@ -45,7 +46,7 @@ export class Dragon {
   traits: Trait[];
 
   @ManyToMany(
-    type => Account,
+    _type => Account,
     account => account.dragons,
   )
   accounts: Account[];

@@ -1,10 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Timeout, Interval, SchedulerRegistry, Cron } from '@nestjs/schedule';
-import { CronJob } from 'cron';
-// import { GenerationService } from '../generation/generation.service';
-import { TraitService } from 'src/trait/trait.service';
+import { Timeout, SchedulerRegistry } from '@nestjs/schedule';
 
 import { GenerationEngineService } from 'src/generation/generation-engine.service';
+import { TraitService } from 'src/trait/trait.service';
 
 @Injectable()
 export class TaskService {
