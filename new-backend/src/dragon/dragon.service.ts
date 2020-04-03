@@ -99,4 +99,20 @@ export class DragonService {
     }
     return result;
   }
+
+  async breedDragon(matron: Dragon, patron: Dragon): Promise<Dragon> {
+    const babyTraits = matron.traits.map(matronTrait => {
+      const patronTrait = patron.traits.find(
+        trait => trait.traitType === matronTrait.traitType,
+      );
+      return this.traitService.mixTrait(matronTrait, patronTrait);
+    });
+
+    const createDragonDto = new CreateDragonDto(
+      this.generationEngineService.generation.id,
+      'New Baby!',
+      babyTraits,
+    );
+    return this.create(createDragonDto);
+  }
 }

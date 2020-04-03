@@ -36,4 +36,9 @@ export class TraitService {
   find(traitType: string, traitValue: string): Promise<Trait> {
     return this.traitRepository.findOne({ traitType, traitValue });
   }
+
+  mixTrait(matronTrait: Trait, patronTrait: Trait): Trait {
+    // TODO: update algorithm
+    return Math.random() > 0.5 ? matronTrait : patronTrait;
+  }
 }

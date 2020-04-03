@@ -10,6 +10,7 @@ import { Dragon } from './dragon.entity';
 import { AccountService } from '../account/account.service';
 import { GenerationEngineService } from '../generation/generation-engine.service';
 import { BuyDragonDto } from './dto/buy-dragon.dto';
+import { MateDragonDto } from './dto/mate-dragon.dto';
 
 @Controller('dragon')
 export class DragonController {
@@ -59,5 +60,18 @@ export class DragonController {
 
   @UseGuards(JwtAuthGuard)
   @Post('mate')
-  async mateDragon() {}
+  async mateDragon(@Body() mateParams: MateDragonDto) {
+    const { matronDragonId, patronDragonId } = mateParams;
+    const matron = await this.dragonService.findOne(matronDragonId);
+    if (!matron) {
+      throw new Error('Matron dragon not found');
+    }
+    const patron = await this.dragonService.findOne(patronDragonId);
+    if (!patron) {
+      throw new Error('Patron dragon not found ');
+    }
+
+    const babyDragon = await this.dragonService.breedDragon(matron, patron);
+    return { ok: true, dragon: babyDragon };
+  }
 }
