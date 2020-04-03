@@ -17,12 +17,14 @@ const getRandomTraits = (): Trait[] => {
 };
 
 export class CreateDragonDto {
-  nickname = 'unnamed';
   birthdate: Date = new Date();
-  traits: Trait[] = getRandomTraits();
   isPublic = false;
   saleValue: number;
   sireValue: number;
 
-  constructor(public generationId: number) {}
+  constructor(
+    public generationId: number,
+    public nickname = 'unnamed',
+    public traits: Trait[] = getRandomTraits(),
+  ) {}
 }
