@@ -1,7 +1,8 @@
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+
 import { Trait } from './trait.entity';
-import { Repository } from 'typeorm';
 import TRAITS from './trait.constant';
 
 @Injectable()

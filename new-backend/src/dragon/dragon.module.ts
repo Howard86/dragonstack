@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { Dragon } from './dragon.entity';
+import { GenerationModule } from 'src/generation/generation.module';
+import { AccountModule } from 'src/account/account.module';
+import { TraitModule } from 'src/trait/trait.module';
+import { AuthModule } from 'src/auth/auth.module';
 import { Trait } from 'src/trait/trait.entity';
-import { Account } from '../account/account.entity';
+import { Account } from 'src/account/account.entity';
 
+import { Dragon } from './dragon.entity';
 import { DragonService } from './dragon.service';
 import { DragonController } from './dragon.controller';
-import { TraitModule } from '../trait/trait.module';
-import { AccountModule } from '../account/account.module';
-import { GenerationModule } from '../generation/generation.module';
-import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [

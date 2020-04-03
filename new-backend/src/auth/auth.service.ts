@@ -1,10 +1,11 @@
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 
-import { jwtConstants } from './constants';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Account } from 'src/account/account.entity';
-import { Repository } from 'typeorm';
+
+import { jwtConstants } from './constants';
 
 interface AuthCookies {
   name: string;
@@ -42,14 +43,6 @@ export class AuthService {
     return undefined;
   }
 
-  // async login(username: string, password: string): Promise<AuthCookies[]> {
-  //   const account = await this.validateLocal(username, password);
-  //   console.log('account', account);
-  //   if (account) {
-  //   }
-  //   return undefined;
-  // }
-
   generateJwt(account: Account): AuthCookies[] {
     const { username, id } = account;
     const payload = { username, sub: id };
@@ -67,6 +60,4 @@ export class AuthService {
     const { jwt } = cookies;
     return this.validateJwt(jwt);
   }
-
-  verify(jwt: string) {}
 }

@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { TraitService } from './trait.service';
-import { Trait } from './trait.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { Trait } from './trait.entity';
+import { TraitService } from './trait.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Trait])],

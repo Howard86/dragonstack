@@ -1,8 +1,9 @@
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Generation } from './generation.entity';
-import { Repository } from 'typeorm';
+
 import { CreateGenerationDto } from './dto/create-generation.dto';
+import { Generation } from './generation.entity';
 
 @Injectable()
 export class GenerationService {

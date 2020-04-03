@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
+
+import { GenerationModule } from 'src/generation/generation.module';
+import { TraitModule } from 'src/trait/trait.module';
+
 import { TaskService } from './task.service';
-import { TraitModule } from '../trait/trait.module';
-import { GenerationModule } from '../generation/generation.module';
 
 @Module({
   imports: [TraitModule, GenerationModule],

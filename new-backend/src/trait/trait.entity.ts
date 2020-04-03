@@ -1,4 +1,3 @@
-import { Dragon } from '../dragon/dragon.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -6,6 +5,8 @@ import {
   Unique,
   ManyToMany,
 } from 'typeorm';
+
+import { Dragon } from 'src/dragon/dragon.entity';
 
 @Entity()
 @Unique(['traitType', 'traitValue'])
@@ -20,7 +21,7 @@ export class Trait {
   traitValue: string;
 
   @ManyToMany(
-    type => Dragon,
+    _type => Dragon,
     dragon => dragon.traits,
   )
   dragons: Dragon[];

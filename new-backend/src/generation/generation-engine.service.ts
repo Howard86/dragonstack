@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
+import { CreateGenerationDto } from './dto/create-generation.dto';
 import { Generation } from './generation.entity';
 import { GenerationService } from './generation.service';
-import { CreateGenerationDto } from './dto/create-generation.dto';
 
 @Injectable()
 export class GenerationEngineService {
