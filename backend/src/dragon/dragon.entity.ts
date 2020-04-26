@@ -34,6 +34,7 @@ export class Dragon {
   @ManyToOne(
     _type => Generation,
     generation => generation.dragons,
+    { eager: true },
   )
   generation: Generation;
 

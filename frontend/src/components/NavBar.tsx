@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -10,17 +10,14 @@ import {
 } from 'react-bootstrap';
 
 import AccountInfo from 'components/Account/AccountInfo';
-import { logoutAction } from 'store/userAccount/actions';
+import { logOut } from 'store/userAccount/actions';
 import { RootState } from 'store/reducers';
 
 const { Brand, Toggle, Collapse } = ReactNavBar;
 
-const NavBar = () => {
+const NavBar: FC = () => {
   const dispatch = useDispatch();
   const { loggedIn } = useSelector(({ userAccount }: RootState) => userAccount);
-  const logout = useCallback(() => {
-    dispatch(logoutAction());
-  }, [dispatch]);
 
   return (
     <Container>
@@ -41,7 +38,10 @@ const NavBar = () => {
               <AccountInfo />
             </Nav>
             <Link to='/'>
-              <Button className='button-padding' onClick={logout}>
+              <Button
+                className='button-padding'
+                onClick={() => dispatch(logOut())}
+              >
                 Log out
               </Button>
             </Link>

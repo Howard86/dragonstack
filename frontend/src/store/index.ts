@@ -15,8 +15,11 @@ if (isDev) {
   const { createLogger } = module.require('redux-logger');
   const logger = createLogger({
     duration: true,
-    collapsed: (_getState: any, _action: any, logEntry: { error: any }) =>
-      !logEntry.error,
+    collapsed: (
+      _getState: RootState,
+      _action: Action,
+      logEntry: { error: Error },
+    ) => !logEntry.error,
     diff: true,
   });
 

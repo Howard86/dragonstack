@@ -1,3 +1,4 @@
+import * as crypto from 'crypto';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -22,10 +23,10 @@ export class AuthService {
 
   async validateLocal(username: string, password: string): Promise<Account> {
     const account = await this.accountRepository.findOneOrFail({ username });
-    if (account && account.password === password) {
-      return account;
-    }
-    return undefined;
+    const isValidated =
+      account?.password === crypto.createHmac('sha256', password).digest('hex');
+
+    return isValidated ? account : undefined;
   }
 
   async validateJwt(jwt: string): Promise<Account> {

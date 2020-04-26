@@ -12,6 +12,7 @@ import { SetCookies, Cookies, ClearCookies } from '@nestjsplus/cookies';
 
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Dragon } from 'src/dragon/dragon.entity';
 
 import { AccountService } from './account.service';
 import { Account } from './account.entity';
@@ -34,7 +35,7 @@ export class AccountController {
     let jwt = '';
     if (account) {
       const cookies = this.authService.generateJwt(account);
-      (req as any)._cookies = cookies;
+      req._cookies = cookies;
       jwt = cookies[0].value;
     }
 
@@ -47,7 +48,7 @@ export class AccountController {
     const { username, password } = req.body;
     const account = await this.accountService.create(username, password);
     const cookies = this.authService.generateJwt(account);
-    (req as any)._cookies = cookies;
+    req._cookies = cookies;
     const jwt = cookies[0].value;
     return { ...account, jwt };
   }
@@ -55,7 +56,7 @@ export class AccountController {
   @ClearCookies('jwt')
   @Get('logout')
   logout() {
-    return 'done';
+    return { ok: true };
   }
 
   @UseGuards(JwtAuthGuard)
@@ -72,23 +73,24 @@ export class AccountController {
     return this.accountService.findOne(username);
   }
 
-  // ! To be deprecated
-  @Get('/authenticated')
-  async authenticated(@Cookies() cookies): Promise<{ authenticated: boolean }> {
+  @UseGuards(JwtAuthGuard)
+  @Get('authenticated')
+  @UseInterceptors(ClassSerializerInterceptor)
+  async authenticated(@Cookies() cookies): Promise<Account> {
     const account = await this.authService.decodeCookies(cookies);
-    const authenticated = account ? true : false;
-    return { authenticated };
+    return account;
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('dragons')
-  async accountDragons(@Cookies() cookies) {
-    const account = await this.authService.decodeCookies(cookies);
-    return account?.dragons;
+  async accountDragons(@Cookies() cookies): Promise<{ dragons: Dragon[] }> {
+    const { dragons } = await this.authService.decodeCookies(cookies);
+    return { dragons };
   }
 
-  // ! To be deprecated
+  @UseGuards(JwtAuthGuard)
   @Get('info')
+  @UseInterceptors(ClassSerializerInterceptor)
   async info(@Cookies() cookies) {
     const account = await this.authService.decodeCookies(cookies);
     const { dragons, ...result } = account;

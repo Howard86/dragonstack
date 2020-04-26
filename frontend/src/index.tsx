@@ -17,7 +17,7 @@ import NavBar from './components/NavBar';
 import './index.css';
 import customStore from 'store';
 import { RootState } from 'store/reducers';
-import { authenticateAction } from 'store/userAccount/actions';
+import { fetchAccountInfo } from 'store/userAccount/actions';
 
 const AuthRoute = props => {
   const { component, path } = props;
@@ -33,7 +33,7 @@ const AuthRoute = props => {
 const App: FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(authenticateAction());
+    dispatch(fetchAccountInfo());
   }, []);
 
   return (

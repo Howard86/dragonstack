@@ -1,30 +1,29 @@
 import React, { FC, FormEvent, useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, FormGroup, FormControl } from 'react-bootstrap';
-import { signupAction, loginAction } from 'store/userAccount/actions';
+import { logIn, signUp } from 'store/userAccount/actions';
 
 const AuthForm: FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [buttonClicked, setButtonClicked] = useState(false);
-  console.log('buttonClicked', buttonClicked);
+  const [, setButtonClicked] = useState(false);
   const dispatch = useDispatch();
 
-  const updateUsername = (event: FormEvent<HTMLInputElement>) =>
+  const updateUsername = (event: FormEvent<HTMLInputElement>): void =>
     setUsername(event.currentTarget.value);
 
-  const updatePassword = (event: FormEvent<HTMLInputElement>) =>
+  const updatePassword = (event: FormEvent<HTMLInputElement>): void =>
     setPassword(event.currentTarget.value);
 
-  const signup = useCallback(() => {
+  const handleSignUp: () => void = useCallback(() => {
     setButtonClicked(true);
-    dispatch(signupAction(username, password));
-  }, [dispatch, username, password]);
+    dispatch(signUp(username, password));
+  }, [username, password]);
 
-  const login = useCallback(() => {
+  const handleLogIn: () => void = useCallback(() => {
     setButtonClicked(true);
-    dispatch(loginAction(username, password));
-  }, [dispatch, username, password]);
+    dispatch(logIn(username, password));
+  }, [username, password]);
 
   return (
     <>
@@ -46,11 +45,11 @@ const AuthForm: FC = () => {
         />
       </FormGroup>
       <div>
-        <Button className='button-padding' onClick={login}>
+        <Button className='button-padding' onClick={handleLogIn}>
           Log in
         </Button>
         <span> or </span>
-        <Button className='button-padding' onClick={signup}>
+        <Button className='button-padding' onClick={handleSignUp}>
           Sign up
         </Button>
       </div>

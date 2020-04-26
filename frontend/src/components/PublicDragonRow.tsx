@@ -1,7 +1,7 @@
 import React, { useState, FC } from 'react';
 import { Button } from 'react-bootstrap';
 
-import { buyDragon } from 'api/dragon';
+import { buyDragon } from 'store/api';
 import DragonAvatar from './Dragon/DragonAvatar';
 import MatingOptions from './MatingOptions';
 

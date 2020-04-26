@@ -1,90 +1,28 @@
-import { AppThunkDispatch } from 'store';
-
-import { getNewDragon, getPublicDragons } from 'api/dragon';
 import { actions } from './index';
+import api from '../api';
 
-// ! Abstracted functions are too complicated
-// const getDragonActions = (
-//   apiFunction: () => Promise<AxiosResponse>,
-//   fetchSuccess: ActionCreatorWithPayload<Dragon[] | Dragon, string>,
-// ): AppThunk => () => async (dispatch: AppThunkDispatch<null>) => {
-//   dispatch(actions.fetch());
-//   try {
-//     const response = await apiFunction();
-//     if (response.status >= 400) {
-//       dispatch(
-//         actions.fetchError({
-//           message: response.statusText,
-//         }),
-//       );
-//     } else {
-//       dispatch(fetchSuccess(response?.data?.dragon));
-//     }
-//   } catch (error) {
-//     const { message } = error;
-//     dispatch(actions.fetchError({ message }));
-//   }
-// };
-
-// const getPublicDragonsAction = getDragonActions(
-//   getPublicDragons,
-//   actions.fetchPublicDragonsSuccess,
-// );
-
-// const getNewDragonAction = getDragonActions(
-//   getNewDragon,
-//   actions.fetchNewDragonSuccess,
-// );
-
-const getNewDragonAction = () => async (dispatch: AppThunkDispatch<null>) => {
+const fetchNewDragon = () => async dispatch => {
   dispatch(actions.fetch());
   try {
-    const response = await getNewDragon();
-    const dragon = response?.data?.dragon;
-
-    if (response.status >= 400) {
-      dispatch(
-        actions.fetchError({
-          message: response.statusText,
-        }),
-      );
-    } else if (dragon) {
-      dispatch(actions.fetchNewDragonSuccess(dragon));
-    } else {
-      dispatch(
-        actions.fetchError({ message: 'No Public Dragons are registered yet' }),
-      );
-    }
+    const response = await api.get<APIResponse.Dragon>('dragon/new');
+    dispatch(actions.fetchNewDragonSuccess(response.data));
   } catch (error) {
     const { message } = error;
     dispatch(actions.fetchError({ message }));
   }
 };
 
-const getPublicDragonsAction = () => async (
-  dispatch: AppThunkDispatch<null>,
-) => {
+const fetchPublicDragons = () => async dispatch => {
   dispatch(actions.fetch());
   try {
-    const response = await getPublicDragons();
-    const dragons = response?.data?.dragons;
-    if (response.status >= 400) {
-      dispatch(
-        actions.fetchError({
-          message: response.statusText,
-        }),
-      );
-    } else if (dragons.length > 0) {
-      dispatch(actions.fetchPublicDragonsSuccess(dragons));
-    } else {
-      dispatch(
-        actions.fetchError({ message: 'No Public Dragons are registered yet' }),
-      );
-    }
+    const response = await api.get<APIResponse.Dragon[]>(
+      'dragon/public-dragons',
+    );
+    dispatch(actions.fetchPublicDragonsSuccess(response.data));
   } catch (error) {
     const { message } = error;
     dispatch(actions.fetchError({ message }));
   }
 };
 
-export { getPublicDragonsAction, getNewDragonAction };
+export { fetchNewDragon, fetchPublicDragons };
