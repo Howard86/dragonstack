@@ -32,6 +32,15 @@ const DEFAULT_DRAGON: DragonState = {
   ],
 };
 
+const convertAPIDragonToStoreDragon = (dragon: APIResponse.Dragon): Dragon => {
+  const { id, generation, ...restDragon } = dragon;
+  return {
+    dragonId: id,
+    generationId: generation.id,
+    ...restDragon,
+  };
+};
+
 const dragonSlice = createSlice({
   name: 'dragon',
   initialState: DEFAULT_DRAGON,
@@ -43,13 +52,16 @@ const dragonSlice = createSlice({
       draft.status = FetchStates.ERROR;
       draft.message = action.payload.message;
     },
-    fetchNewDragonSuccess(draft, action: PayloadAction<Dragon>) {
+    fetchNewDragonSuccess(draft, action: PayloadAction<APIResponse.Dragon>) {
       draft.status = FetchStates.SUCCESS;
-      draft.newDragon = action.payload;
+      draft.newDragon = convertAPIDragonToStoreDragon(action.payload);
     },
-    fetchPublicDragonsSuccess(draft, action: PayloadAction<Array<Dragon>>) {
+    fetchPublicDragonsSuccess(
+      draft,
+      action: PayloadAction<APIResponse.Dragon[]>,
+    ) {
       draft.status = FetchStates.SUCCESS;
-      draft.publicDragons = action.payload;
+      draft.publicDragons = action.payload.map(convertAPIDragonToStoreDragon);
     },
   },
 });
