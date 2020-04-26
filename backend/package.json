@@ -57,7 +57,7 @@
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-import": "^2.19.1",
     "jest": "^24.9.0",
-    "pg": "^7.18.2",
+    "pg": "^8.0.3",
     "prettier": "^1.18.2",
     "supertest": "^4.0.2",
     "swagger-ui-express": "^4.1.3",
