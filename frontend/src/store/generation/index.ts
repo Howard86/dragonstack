@@ -7,7 +7,7 @@ export interface GenerationState extends StateWise, Generation {}
 
 const DEFAULT_GENERATION: GenerationState = {
   status: FetchStates.INIT,
-  generationId: '',
+  id: 0,
   expiration: '',
 };
 
@@ -33,20 +33,4 @@ const generationSlice = createSlice({
 
 const { reducer, actions } = generationSlice;
 
-const getGenerationAction = () => async (dispatch: AppThunkDispatch<null>) => {
-  dispatch(actions.fetch());
-  try {
-    const response = await getNewGeneration();
-    const generation = response?.data?.generation;
-    if (response.status >= 400) {
-      dispatch(actions.fetchError({ message: response.statusText }));
-    } else {
-      dispatch(actions.fetchSuccess(generation));
-    }
-  } catch (error) {
-    const { message } = error;
-    dispatch(actions.fetchError({ message }));
-  }
-};
-
-export { reducer, getGenerationAction };
+export { reducer, actions };
