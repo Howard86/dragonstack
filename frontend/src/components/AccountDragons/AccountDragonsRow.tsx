@@ -18,20 +18,20 @@ const AccountDragonRow: FC<Dragon> = (dragon: Dragon) => {
   const [sireValue, setSireValue] = useState(initSireValue);
   const [isEditing, setIsEditing] = useState(false);
 
-  const updateNickname = (event: FormEvent<HTMLInputElement>) =>
+  const updateNickname = (event: FormEvent<HTMLInputElement>): void =>
     setNickname(event.currentTarget.value);
-  const updateSaleValue = (event: FormEvent<HTMLInputElement>) =>
+  const updateSaleValue = (event: FormEvent<HTMLInputElement>): void =>
     setSaleValue(event.currentTarget.valueAsNumber);
-  const updateSireValue = (event: FormEvent<HTMLInputElement>) =>
+  const updateSireValue = (event: FormEvent<HTMLInputElement>): void =>
     setSireValue(event.currentTarget.valueAsNumber);
-  const updateIsPublic = (event: FormEvent<HTMLInputElement>) =>
+  const updateIsPublic = (event: FormEvent<HTMLInputElement>): void =>
     setIsPublic(event.currentTarget.checked);
 
-  const toggleEdit = () => setIsEditing(!isEditing);
+  const toggleEdit = (): void => setIsEditing(!isEditing);
 
-  const save = async () => {
+  const save = async (): Promise<void> => {
     try {
-      const response = await updateDragon({
+      await updateDragon({
         dragonId,
         nickname,
         saleValue,
@@ -45,14 +45,14 @@ const AccountDragonRow: FC<Dragon> = (dragon: Dragon) => {
     }
   };
 
-  const cancel = () => {
+  const cancel = (): void => {
     setIsEditing(!isEditing);
     setNickname(initNickname);
     setSaleValue(initSaleValue);
     setSireValue(initSireValue);
   };
 
-  const SaveButton = () => (
+  const SaveButton = (): JSX.Element => (
     <div>
       <Button className='button-padding' onClick={save}>
         Save
@@ -63,7 +63,7 @@ const AccountDragonRow: FC<Dragon> = (dragon: Dragon) => {
     </div>
   );
 
-  const EditButton = () => (
+  const EditButton = (): JSX.Element => (
     <Button className='button-padding' onClick={toggleEdit}>
       Edit
     </Button>

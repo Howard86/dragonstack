@@ -6,21 +6,21 @@ import { logIn, signUp } from 'store/userAccount/actions';
 const AuthForm: FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [buttonClicked, setButtonClicked] = useState(false);
+  const [, setButtonClicked] = useState(false);
   const dispatch = useDispatch();
 
-  const updateUsername = (event: FormEvent<HTMLInputElement>) =>
+  const updateUsername = (event: FormEvent<HTMLInputElement>): void =>
     setUsername(event.currentTarget.value);
 
-  const updatePassword = (event: FormEvent<HTMLInputElement>) =>
+  const updatePassword = (event: FormEvent<HTMLInputElement>): void =>
     setPassword(event.currentTarget.value);
 
-  const handleSignUp = useCallback(() => {
+  const handleSignUp: () => void = useCallback(() => {
     setButtonClicked(true);
     dispatch(signUp(username, password));
   }, [username, password]);
 
-  const handleLogIn = useCallback(() => {
+  const handleLogIn: () => void = useCallback(() => {
     setButtonClicked(true);
     dispatch(logIn(username, password));
   }, [username, password]);

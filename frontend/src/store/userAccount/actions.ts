@@ -1,7 +1,7 @@
 import { actions } from './';
 import api from '../api';
 
-const updateJwt = (jwt: string) => {
+const updateJwt = (jwt: string): void => {
   Object.assign(api.defaults, {
     headers: { authorization: `Bearer ${jwt}` },
   });

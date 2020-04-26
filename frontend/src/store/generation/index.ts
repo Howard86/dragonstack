@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunkDispatch } from 'store';
-import { getNewGeneration } from 'api/generation';
 import { FetchStates } from 'constants/fetch';
 
 export interface GenerationState extends StateWise, Generation {}
