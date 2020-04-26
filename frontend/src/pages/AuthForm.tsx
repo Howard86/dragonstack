@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useState, useCallback } from 'react';
+import React, { FC, useState, useCallback, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, FormGroup, FormControl } from 'react-bootstrap';
 import { logIn, signUp } from 'store/userAccount/actions';
@@ -9,10 +9,9 @@ const AuthForm: FC = () => {
   const [, setButtonClicked] = useState(false);
   const dispatch = useDispatch();
 
-  const updateUsername = (event: FormEvent<HTMLInputElement>): void =>
+  const updateUsername = (event: ChangeEvent<HTMLInputElement>) =>
     setUsername(event.currentTarget.value);
-
-  const updatePassword = (event: FormEvent<HTMLInputElement>): void =>
+  const updatePassword = (event: ChangeEvent<HTMLInputElement>) =>
     setPassword(event.currentTarget.value);
 
   const handleSignUp: () => void = useCallback(() => {
@@ -54,11 +53,6 @@ const AuthForm: FC = () => {
         </Button>
       </div>
       <br />
-      {/* {this.Error && (
-        <div className='alert alert-danger' role='alert'>
-          {this.Error}
-        </div>
-      )} */}
     </>
   );
 };
