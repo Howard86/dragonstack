@@ -1,4 +1,4 @@
 interface Generation {
-  generationId: string;
+  id: number;
   expiration: string;
 }
