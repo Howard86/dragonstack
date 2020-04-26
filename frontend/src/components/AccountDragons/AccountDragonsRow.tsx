@@ -1,7 +1,7 @@
 import React, { FormEvent, useState, FC } from 'react';
 import DragonAvatar from 'components/Dragon/DragonAvatar';
 import { Button } from 'react-bootstrap';
-import { updateDragon } from 'api/dragon';
+import { updateDragon } from 'store/api';
 
 const AccountDragonRow: FC<Dragon> = (dragon: Dragon) => {
   const {
