@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -15,7 +15,7 @@ import { RootState } from 'store/reducers';
 
 const { Brand, Toggle, Collapse } = ReactNavBar;
 
-const NavBar = () => {
+const NavBar: FC = () => {
   const dispatch = useDispatch();
   const { loggedIn } = useSelector(({ userAccount }: RootState) => userAccount);
 
