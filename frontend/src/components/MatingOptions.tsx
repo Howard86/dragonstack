@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { mateDragon } from 'api/dragon';
+import { mateDragon } from 'store/api';
 import { RootState } from 'store/reducers';
 
 const MatingOptions: FC<number> = (patronDragonId: number) => {
