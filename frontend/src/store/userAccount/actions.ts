@@ -1,5 +1,6 @@
 import { actions } from './';
 import api from '../api';
+import { convertAPIDragonToStoreDragon } from 'store/dragon';
 
 const updateJwt = (jwt: string): void => {
   Object.assign(api.defaults, {
@@ -49,9 +50,13 @@ const logIn = (username: string, password: string) => async dispatch => {
 const fetchAccountDragons = () => async dispatch => {
   dispatch(actions.fetch());
   try {
-    const response = await api.get<{ dragons: Dragon[] }>('account/dragons');
+    const response = await api.get<{ dragons: APIResponse.Dragon[] }>(
+      'account/dragons',
+    );
     const { dragons } = response.data;
-    dispatch(actions.fetchDragonsSuccess(dragons));
+    dispatch(
+      actions.fetchDragonsSuccess(dragons.map(convertAPIDragonToStoreDragon)),
+    );
   } catch (error) {
     const { message } = error;
     dispatch(actions.fetchError({ message }));
