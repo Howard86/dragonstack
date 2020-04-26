@@ -56,7 +56,7 @@ export class AccountController {
   @ClearCookies('jwt')
   @Get('logout')
   logout() {
-    return 'done';
+    return { ok: true };
   }
 
   @UseGuards(JwtAuthGuard)
