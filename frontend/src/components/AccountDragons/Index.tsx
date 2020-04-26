@@ -1,6 +1,6 @@
 import React, { useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccountDragonsAction } from 'store/userAccount/actions';
+import { fetchAccountDragons } from 'store/userAccount/actions';
 import AccountDragonRow from './AccountDragonsRow';
 import { RootState } from '../../store/reducers';
 
@@ -8,8 +8,8 @@ const AccountDragons: FC = () => {
   const { dragons } = useSelector(({ userAccount }: RootState) => userAccount);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAccountDragonsAction());
-  }, [dispatch]);
+    dispatch(fetchAccountDragons());
+  }, []);
 
   return (
     <>

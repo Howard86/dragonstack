@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavDropdown } from 'react-bootstrap';
 
 import { RootState } from 'store/reducers';
-import { getAccountInfoAction } from 'store/userAccount/actions';
+import { fetchAccountInfo } from 'store/userAccount/actions';
 
 const { Header, Item, Divider } = NavDropdown;
 
@@ -13,8 +13,8 @@ const AccountInfo: FC = () => {
   );
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAccountInfoAction());
-  }, [dispatch]);
+    dispatch(fetchAccountInfo());
+  }, []);
   return (
     <NavDropdown title='Account Info' id='basic-nav-dropdown'>
       <Header>Username</Header>
