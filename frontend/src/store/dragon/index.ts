@@ -68,4 +68,4 @@ const dragonSlice = createSlice({
 
 const { actions, reducer } = dragonSlice;
 
-export { reducer, actions };
+export { reducer, actions, convertAPIDragonToStoreDragon };
