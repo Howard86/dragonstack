@@ -14,3 +14,8 @@ interface ApiDefaultResponse {
   type: string;
   message?: string;
 }
+
+// TODO: remove ok response
+interface OkResponse {
+  ok: boolean;
+}

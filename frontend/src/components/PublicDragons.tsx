@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from 'store/reducers';
-import { getAccountDragonsAction } from 'store/userAccount/actions';
+import { fetchAccountDragons } from 'store/userAccount/actions';
 import { getPublicDragonsAction } from 'store/dragon/actions';
 import PublicDragonRow from './PublicDragonRow';
 
@@ -12,8 +12,8 @@ const PublicDragons: FC = () => {
 
   useEffect(() => {
     dispatch(getPublicDragonsAction());
-    dispatch(getAccountDragonsAction());
-  }, [dispatch]);
+    dispatch(fetchAccountDragons());
+  }, []);
 
   return (
     <>

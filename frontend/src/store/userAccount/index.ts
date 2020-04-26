@@ -1,13 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FetchStates } from 'constants/fetch';
 
-export interface UserAccountState extends UserAccount, StateWise {}
+export interface UserAccountState extends UserAccountResponse, StateWise {
+  loggedIn: boolean;
+  dragons?: Dragon[];
+}
 
 const DEFAULT_ACCOUNT: UserAccountState = {
   status: FetchStates.INIT,
   loggedIn: false,
   balance: 0,
   username: '',
+  jwt: '',
+  dragons: [],
 };
 
 const userAccountSlice = createSlice({
@@ -21,9 +26,12 @@ const userAccountSlice = createSlice({
       draft.status = FetchStates.ERROR;
       draft.message = action.payload.message;
     },
-    fetchSignInSuccess(draft) {
-      draft.status = FetchStates.SUCCESS;
-      draft.loggedIn = true;
+    fetchSignInSuccess(draft, actions) {
+      return {
+        status: FetchStates.SUCCESS,
+        loggedIn: true,
+        ...actions.payload,
+      };
     },
     fetchLogoutSuccess(draft) {
       draft.status = FetchStates.SUCCESS;
@@ -36,14 +44,14 @@ const userAccountSlice = createSlice({
       draft.status = FetchStates.SUCCESS;
       draft.loggedIn = action.payload.authenticated;
     },
-    fetchInfoSuccess(draft, action: PayloadAction<UserAccount>) {
+    fetchInfoSuccess(draft, action: PayloadAction<UserAccountResponse>) {
       return {
         status: FetchStates.SUCCESS,
         loggedIn: true,
         ...action.payload,
       };
     },
-    fetchDragonsSuccess(draft, action: PayloadAction<Array<Dragon>>) {
+    fetchDragonsSuccess(draft, action: PayloadAction<Dragon[]>) {
       draft.status = FetchStates.SUCCESS;
       draft.dragons = action.payload;
     },

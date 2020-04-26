@@ -1,138 +1,72 @@
-import { AppThunkDispatch } from 'store';
-import { ActionCreator } from 'redux';
-import {
-  signup,
-  logout,
-  login,
-  fetchAuthenticated,
-  fetchAccountDragons,
-  fetchAccountInfo,
-} from 'api/account';
-import { actions } from './index';
+import { actions } from './';
+import api from '../api';
 
-// TODO: Fix AppThunk Types
-// const userAccountAction = (
-//   apiFunction: (params?: any) => Promise<AxiosResponse>,
-//   successAction: () => any,
-//   params?: any,
-// ) => () => async (dispatch: AppThunkDispatch<null>) => {
-//   dispatch(actions.fetch());
-//   try {
-//     const response = await apiFunction(...params);
-//     if (response.status >= 400) {
-//       dispatch(actions.fetchError({ message: response.statusText }));
-//     } else {
-//       dispatch((actions as any).successAction());
-//     }
-//   } catch (error) {
-//     const { message } = error;
-//     dispatch(actions.fetchError({ message }));
-//   }
-// };
+const updateJwt = (jwt: string) => {
+  Object.assign(api.defaults, {
+    headers: { authorization: `Bearer ${jwt}` },
+  });
+};
 
-const signupAction = (username: string, password: string) => async (
-  dispatch: AppThunkDispatch<null>,
-) => {
+const signUp = (username: string, password: string) => async dispatch => {
   dispatch(actions.fetch());
   try {
-    const response = await signup(username, password);
-    if (response.status >= 400) {
-      dispatch(actions.fetchError({ message: response.statusText }));
-    } else {
-      dispatch(actions.fetchSignInSuccess());
-    }
+    const { data } = await api.post<APIResponse.SignUp>('account/signup', {
+      username,
+      password,
+    });
+    updateJwt(data.jwt);
+    dispatch(actions.fetchSignInSuccess(data));
   } catch (error) {
     const { message } = error;
     dispatch(actions.fetchError({ message }));
   }
 };
 
-const logoutAction = () => async (dispatch: AppThunkDispatch<null>) => {
+const logOut = () => async dispatch => {
+  const response = await api.get<OkResponse>('account/logout');
+  if (response.data.ok) {
+    dispatch(actions.fetchLogoutSuccess());
+  } else {
+    dispatch(actions.fetchError({ message: 'failed to logout' }));
+  }
+};
+
+const logIn = (username: string, password: string) => async dispatch => {
   dispatch(actions.fetch());
   try {
-    const response = await logout();
-    if (response.status >= 400) {
-      dispatch(actions.fetchError({ message: response.statusText }));
-    } else {
-      dispatch(actions.fetchLogoutSuccess());
-    }
+    const { data } = await api.post<APIResponse.Login>('account/login', {
+      username,
+      password,
+    });
+    updateJwt(data.jwt);
+    dispatch(actions.fetchSignInSuccess(data));
   } catch (error) {
     const { message } = error;
     dispatch(actions.fetchError({ message }));
   }
 };
 
-const loginAction = (username: string, password: string) => async (
-  dispatch: AppThunkDispatch<null>,
-) => {
+const fetchAccountDragons = () => async dispatch => {
   dispatch(actions.fetch());
   try {
-    const response = await login(username, password);
-    if (response.status >= 400) {
-      dispatch(actions.fetchError({ message: response.statusText }));
-    } else {
-      dispatch(actions.fetchSignInSuccess());
-    }
+    const response = await api.get<{ dragons: Dragon[] }>('account/dragons');
+    const { dragons } = response.data;
+    dispatch(actions.fetchDragonsSuccess(dragons));
   } catch (error) {
     const { message } = error;
     dispatch(actions.fetchError({ message }));
   }
 };
 
-const authenticateAction = () => async (dispatch: ActionCreator<null>) => {
+const fetchAccountInfo = () => async dispatch => {
   dispatch(actions.fetch());
   try {
-    const response = await fetchAuthenticated();
-    if (response.status >= 400) {
-      dispatch(actions.fetchError({ message: response.statusText }));
-    } else {
-      dispatch(actions.fetchSignInSuccess());
-    }
+    const response = await api.get<UserAccountResponse>('account/info');
+    dispatch(actions.fetchInfoSuccess(response.data));
   } catch (error) {
     const { message } = error;
     dispatch(actions.fetchError({ message }));
   }
 };
 
-const getAccountDragonsAction = () => async (
-  dispatch: AppThunkDispatch<null>,
-) => {
-  dispatch(actions.fetch());
-  try {
-    const response = await fetchAccountDragons();
-    if (response.status >= 400) {
-      dispatch(actions.fetchError({ message: response.statusText }));
-    } else {
-      const { dragons } = response.data;
-      dispatch(actions.fetchDragonsSuccess(dragons));
-    }
-  } catch (error) {
-    const { message } = error;
-    dispatch(actions.fetchError({ message }));
-  }
-};
-
-const getAccountInfoAction = () => async (dispatch: AppThunkDispatch<null>) => {
-  dispatch(actions.fetch());
-  try {
-    const response = await fetchAccountInfo();
-    if (response.status >= 400) {
-      dispatch(actions.fetchError({ message: response.statusText }));
-    } else {
-      const { info } = response.data;
-      dispatch(actions.fetchInfoSuccess({ ...info }));
-    }
-  } catch (error) {
-    const { message } = error;
-    dispatch(actions.fetchError({ message }));
-  }
-};
-
-export {
-  signupAction,
-  logoutAction,
-  loginAction,
-  authenticateAction,
-  getAccountDragonsAction,
-  getAccountInfoAction,
-};
+export { signUp, logOut, logIn, fetchAccountInfo, fetchAccountDragons };
