@@ -18,6 +18,14 @@ To get started with `homebrew`
 brew service postgresql start
 ```
 
+```bash
+docker run --name dragonstack-psql \
+    -p 5432:5432 \
+    -e POSTGRES_DB=dragonstack \
+    -e POSTGRES_PASSWORD=mysecretpassword \
+    -d postgres
+```
+
 ### Installing
 
 First clone this repository and create a copy of `.env` in `/backend` from `.env.example`. Modify `.env` if needed.
