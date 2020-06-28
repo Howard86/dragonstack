@@ -1,10 +1,10 @@
-package howardism.springboot;
+package com.dragonstack;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApplicationTests {
+class DragonstackApplicationTests {
 
 	@Test
 	void contextLoads() {
