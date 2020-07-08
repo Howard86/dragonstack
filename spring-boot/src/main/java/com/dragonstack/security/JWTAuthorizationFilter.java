@@ -1,6 +1,8 @@
 package com.dragonstack.security;
 
+import com.dragonstack.YAMLConfig;
 import com.dragonstack.util.Parser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,10 +18,14 @@ import java.util.ArrayList;
 import static com.dragonstack.constant.SecurityConstants.HEADER_STRING;
 import static com.dragonstack.constant.SecurityConstants.TOKEN_PREFIX;
 
+@Slf4j
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    public JWTAuthorizationFilter(AuthenticationManager authManager) {
+    private final YAMLConfig config;
+
+    public JWTAuthorizationFilter(AuthenticationManager authManager, YAMLConfig config) {
         super(authManager);
+        this.config = config;
     }
 
     @Override
@@ -44,7 +50,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
-            String user = Parser.parseJWTHeader(token);
+            String user = Parser.parseJWTHeader(token, config.getSecret());
 
             if (user != null) {
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());

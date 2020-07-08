@@ -27,7 +27,7 @@ spring:
 hibernate:
   show_sql: true
 
-jwt-validation-secret: SecretKeyToGenJWTs
+secret: SecretKeyToGenJWTs
 
 ---
 
@@ -53,7 +53,7 @@ spring:
 hibernate:
   show_sql: true
 
-jwt-validation-secret: SecretKeyToGenJWTs
+secret: SecretKeyToGenJWTs
 
 ---
 
@@ -79,4 +79,4 @@ spring:
 hibernate:
   show_sql: true
 
-jwt-validation-secret: SecretKeyToGenJWTs
+secret: SecretKeyToGenJWTs
