@@ -1,9 +1,9 @@
 package com.dragonstack.security;
 
 import com.auth0.jwt.JWT;
+import com.dragonstack.YAMLConfig;
 import com.dragonstack.model.entity.Account;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,10 +21,16 @@ import java.util.Date;
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 import static com.dragonstack.constant.SecurityConstants.*;
 
-@AllArgsConstructor
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+
+    private final YAMLConfig config;
+
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, YAMLConfig config) {
+        this.authenticationManager = authenticationManager;
+        this.config = config;
+    }
 
     @Override
     public Authentication attemptAuthentication(
@@ -57,7 +63,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = JWT.create()
                 .withSubject(((User) authResult.getPrincipal()).getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .sign(HMAC512(SECRET.getBytes()));
+                .sign(HMAC512(config.getSecret().getBytes()));
 
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
     }

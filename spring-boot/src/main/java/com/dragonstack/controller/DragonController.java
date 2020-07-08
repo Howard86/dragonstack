@@ -1,5 +1,6 @@
 package com.dragonstack.controller;
 
+import com.dragonstack.YAMLConfig;
 import com.dragonstack.constant.SecurityConstants;
 import com.dragonstack.model.dto.DragonUpdateDTO;
 import com.dragonstack.model.entity.Account;
@@ -25,6 +26,7 @@ public class DragonController {
 
     private final DragonService dragonService;
     private final AccountRepository accountRepository;
+    private final YAMLConfig config;
 
     @GetMapping
     public ResponseEntity<List<Dragon>> getOwnedDragons(@RequestHeader(SecurityConstants.HEADER_STRING) String header) {
@@ -91,7 +93,7 @@ public class DragonController {
     }
 
     private Account getAccount(@RequestHeader(SecurityConstants.HEADER_STRING) String header) {
-        String username = Parser.parseJWTHeader(header);
+        String username = Parser.parseJWTHeader(header, config.getSecret());
         return accountRepository.findByUsername(username);
     }
 }

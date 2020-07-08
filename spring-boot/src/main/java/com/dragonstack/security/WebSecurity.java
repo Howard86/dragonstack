@@ -1,8 +1,10 @@
 package com.dragonstack.security;
 
+import com.dragonstack.YAMLConfig;
 import com.dragonstack.constant.SecurityConstants;
 import com.dragonstack.service.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,8 +21,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @AllArgsConstructor
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsServiceImpl userDetailsService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private final YAMLConfig config;
+
+    private final UserDetailsServiceImpl userDetailsService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -29,7 +34,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(getJWTAuthenticationFilter())
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), config))
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
@@ -48,7 +53,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     public JWTAuthenticationFilter getJWTAuthenticationFilter() throws Exception {
-        final JWTAuthenticationFilter filter = new JWTAuthenticationFilter(authenticationManager());
+        final JWTAuthenticationFilter filter = new JWTAuthenticationFilter(authenticationManager(), config);
         filter.setAuthenticationManager(authenticationManager());
         filter.setFilterProcessesUrl(SecurityConstants.LOGIN_URL);
         return filter;

@@ -15,7 +15,5 @@ public class YAMLConfig {
 
     private String name;
     private String environment;
-
-//    TODO: find a way to dynamically import secret to SecurityConstant
-//    private String jwtValidationSecret;
+    private String secret;
 }
