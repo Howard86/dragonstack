@@ -2,13 +2,15 @@ package com.dragonstack.service;
 
 import com.dragonstack.model.entity.Account;
 import com.dragonstack.model.entity.Dragon;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public interface DragonService {
 
-    Dragon create(Account account);
+    Dragon createNewDragon(Account account);
 
     List<Dragon> getOwnedDragons(Account account);
 
@@ -18,7 +20,7 @@ public interface DragonService {
 
     Dragon update(Dragon dragon);
 
-    void buy(Long buyerId, Long dragonId);
+    Dragon buy(Account account, Dragon dragon);
 
-    Dragon breed(Long matronId, Long patronId);
+    Dragon breed(Dragon ownedDragon, Dragon siredDragon);
 }

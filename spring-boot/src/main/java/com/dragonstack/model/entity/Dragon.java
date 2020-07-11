@@ -21,10 +21,10 @@ public class Dragon {
     private Long id;
 
     @NotNull
-    private LocalDateTime birthdate;
+    private LocalDateTime birthdate = LocalDateTime.now();
 
     @NotNull
-    private String nickname;
+    private String nickname = "A New Happy Dragon";
 
     private boolean isPublic = false;
     private int sireValue = 0;
