@@ -25,7 +25,7 @@ public class TraitServiceImpl implements TraitService {
     }
 
     @Override
-    public List<Trait> getTraitValuesByTraitType(String traitType) {
+    public List<Trait> getValuesByType(String traitType) {
         return traitRepository.findByTraitType(traitType);
     }
 }
