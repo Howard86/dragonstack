@@ -7,13 +7,11 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class AccountInfoDTO {
+public class TraitDTO {
 
     @NotNull
-    private Long id;
+    private String traitType;
 
     @NotNull
-    private String username;
-
-    private int balance;
+    private String traitValue;
 }
