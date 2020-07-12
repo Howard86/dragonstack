@@ -1,39 +1,34 @@
 # DragonStack
 
-A Javascript full-stack monorepo that creates an e-commerce site for interacting with dragons.
+A  full-stack  e-commerce site with Java Spring Boot and React for interacting with dragons.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Package Manager [Yarn](https://yarnpkg.com/)
-
-- PostgreSQL version 9.6+ installed, via one of the following
-  - [Homebrew](https://formulae.brew.sh/formula/postgresql)
-  - [Docker](https://hub.docker.com/_/postgres)
-
-To get started with `homebrew`
-
-```bash
-brew service postgresql start
-```
+- [Node.js](https://nodejs.org/) v12
+- Java 14 [JDK](https://openjdk.java.net/projects/jdk/14/)
+- JavaScript Package Manager [Yarn](https://yarnpkg.com/) v1.22.*
+- Java Build Tool [Gradle](https://gradle.org/) v6.5
+- [PostgreSQL](https://www.postgresql.org/) v9.6+ installed, here via [Docker](https://hub.docker.com/_/postgres)
 
 ### Installing
 
-First clone this repository and create a copy of `.env` in `/backend` from `.env.example`. Modify `.env` if needed.
+Make sure an active instance of PostgresSQL is running with default port 5432,
+or here we start an instance with Docker:
 
 ```bash
-git clone https://github.com/Howard86/dragonstack.git
-cd backend && cp .env.example .env
+docker run --name dragonstack-psql \
+    -p 5432:5432 \
+    -e POSTGRES_DB=dragonstack \
+    -e POSTGRES_PASSWORD=mysecretpassword \
+    -d postgres:9.6-alpine
 ```
 
-Make sure your PostgreSQL is running, then start backend and frontend services.
-
-For backend, to start a `NestJs` dev server, run:
+For backend, to start a `Spring Boot` server, run:
 
 ```bash
-cd backend
-yarn && yarn start:dev
+cd backend && ./gradlew bootRun
 ```
 
 For frontend, to use `webpack` to start a dev server, run:
@@ -49,7 +44,7 @@ The website can be found on [localhost:8080](http://localhost:8080)
 
 There is currently no testing on this project.
 
-Simply use `eslint` in frontend and backend folder:
+Simply use `eslint` in frontend folder:
 
 ```bash
 yarn lint
@@ -57,12 +52,12 @@ yarn lint
 
 ## Built With
 
-- [React](https://reactjs.org/) - A JavaScript library for building user interfaces
-- [NestJS](https://nestjs.com/) - A progressive Node.js framework for building efficient, reliable and scalable server-side applications.
+- [React](https://reactjs.org/) - a JavaScript library for building user interfaces
+- [Spring Boot](https://spring.io/) v2.3.1 - the world's most popular Java framework focusing on speed, simplicity, and productivity.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see [LICENSE](LICENSE) for details
 
 ## Acknowledgments
 

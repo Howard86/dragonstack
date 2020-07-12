@@ -1,0 +1,92 @@
+spring:
+  profiles:
+    active:
+      - dev
+
+---
+
+name: test-YAML
+environment: testing
+
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:postgresql://localhost/dragonstack
+    username: postgres
+    password: mysecretpassword
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+  jackson:
+    default-property-inclusion: non_null
+
+hibernate:
+  show_sql: true
+
+secret: SecretKeyToGenJWTs
+
+server:
+  port: 8081
+
+---
+
+name: prod-YAML
+environment: production
+
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:postgresql://localhost/dragonstack
+    username: postgres
+    password: mysecretpassword
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+  jackson:
+    default-property-inclusion: non_null
+
+hibernate:
+  show_sql: true
+
+secret: SecretKeyToGenJWTs
+
+server:
+  port: 8081
+
+---
+
+name: dev-YAML
+environment: development
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:postgresql://localhost/dragonstack
+    username: postgres
+    password: mysecretpassword
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+  jackson:
+    default-property-inclusion: non_null
+
+hibernate:
+  show_sql: true
+
+secret: SecretKeyToGenJWTs
+
+server:
+  port: 8081
+
