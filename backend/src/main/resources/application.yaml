@@ -29,6 +29,9 @@ hibernate:
 
 secret: SecretKeyToGenJWTs
 
+server:
+  port: 8081
+
 ---
 
 name: prod-YAML
@@ -55,6 +58,9 @@ hibernate:
 
 secret: SecretKeyToGenJWTs
 
+server:
+  port: 8081
+
 ---
 
 name: dev-YAML
@@ -80,3 +86,7 @@ hibernate:
   show_sql: true
 
 secret: SecretKeyToGenJWTs
+
+server:
+  port: 8081
+
