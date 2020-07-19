@@ -1,12 +1,17 @@
 import { AppProps } from 'next/app'
-import { ThemeProvider } from 'styled-components'
-
-import theme from '@/theme'
+import { Grommet, grommet as grommetTheme } from 'grommet'
+import { SWRConfig } from 'swr'
+import Layout from '@/components/Layout'
+import { fetcher } from '@/api'
 
 const MyApp = ({ Component, pageProps }: AppProps): unknown => (
-  <ThemeProvider theme={theme}>
-    <Component {...pageProps} />
-  </ThemeProvider>
+  <Grommet theme={grommetTheme} full>
+    <SWRConfig value={{ fetcher }}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </SWRConfig>
+  </Grommet>
 )
 
 export default MyApp
