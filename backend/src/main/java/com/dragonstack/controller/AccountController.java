@@ -28,6 +28,11 @@ public class AccountController {
 
 //    @PostMapping("/login") is at security.WebSecurity
 
+    @PostMapping("/login")
+    public ResponseEntity<String> login() {
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
     @PostMapping("/sign-up")
     public ResponseEntity<AccountInfoDTO> signUp(@RequestBody AccountCreationDTO accountCreationDTO) {
         String username = accountCreationDTO.getUsername();

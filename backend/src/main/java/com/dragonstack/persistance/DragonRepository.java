@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface DragonRepository extends JpaRepository<Dragon, Long> {
 
-    List<Dragon> findByAccountId(Long accountId);
+    List<Dragon> findByAccountIdOrderByIdDesc(Long accountId);
 
-    List<Dragon> findByIsPublicTrue();
+    List<Dragon> findByIsPublicTrueOrderByIdDesc();
 }
