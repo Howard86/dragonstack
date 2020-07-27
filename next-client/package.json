@@ -9,7 +9,7 @@
     "start": "next start -p 8080",
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write **/*.{ts,tsx}",
-    "lint": "eslint . --ext ts --ext tsx"
+    "lint": "eslint src/**"
   },
   "dependencies": {
     "axios": "^0.19.2",
