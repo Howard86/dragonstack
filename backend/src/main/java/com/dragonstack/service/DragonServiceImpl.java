@@ -37,12 +37,12 @@ public class DragonServiceImpl implements DragonService {
 
     @Override
     public List<Dragon> getOwnedDragons(@NotNull Account account) {
-        return dragonRepository.findByAccountId(account.getId());
+        return dragonRepository.findByAccountIdOrderByIdDesc(account.getId());
     }
 
     @Override
     public List<Dragon> getPublicDragons() {
-        return dragonRepository.findByIsPublicTrue();
+        return dragonRepository.findByIsPublicTrueOrderByIdDesc();
     }
 
     @Override
