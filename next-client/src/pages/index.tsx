@@ -1,28 +1,48 @@
 import React, { FC, useState } from 'react'
+import { parseCookies } from 'nookies'
+import { useRouter } from 'next/router'
 import { Box, Button } from 'grommet'
 
-import Dragon from '@/components/Dragon'
 import Generation from '@/components/Generation'
-import { generateNewDragon } from '@/api'
+import Dragon from '@/components/Dragon'
+import AuthForm from '@/components/AuthForm'
+import { logout, generateNewDragon } from '@/api'
 
-const Home: FC = () => {
+const HomePage: FC = () => {
+  const cookies = parseCookies({})
+  const router = useRouter()
+  const { jwt } = cookies
+
   const [dragon, setDragon] = useState<API.Dragon | undefined>(undefined)
 
   const handleGetDragon = () => {
     generateNewDragon().then(setDragon).catch(alert)
   }
 
-  return (
-    <Box margin='large' align='center'>
-      <Box direction='row' width='large' margin='medium' gap='medium'>
-        <Box pad='medium' gap='medium'>
-          <Generation />
-          <Button label='Click!' onClick={handleGetDragon} />
+  return !jwt ? (
+    <AuthForm />
+  ) : (
+    <Box flex='grow' align='center' alignContent='start'>
+      <Box margin='large' align='center'>
+        <Box direction='row' width='large' gap='small'>
+          <Box pad='medium' gap='small'>
+            <Generation />
+            <Button label='Click!' onClick={handleGetDragon} />
+          </Box>
+          {dragon && <Dragon dragon={dragon} />}
         </Box>
-        {dragon && <Dragon dragon={dragon} />}
+      </Box>
+      <Box>
+        <Button
+          onClick={() => {
+            logout()
+            router.reload()
+          }}
+          label='Log Out'
+        />
       </Box>
     </Box>
   )
 }
 
-export default Home
+export default HomePage

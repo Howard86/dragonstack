@@ -1,23 +1,38 @@
 import axios from 'axios'
+import { destroyCookie, setCookie } from 'nookies'
 
 // TODO: move this to config
 const BASE_URL = 'http://localhost:8081'
+const ONE_WEEK = 60 * 60 * 24 * 7
 
 const instance = axios.create({ baseURL: BASE_URL })
+
+const updateAuthHeader = (jwt?: string): void => {
+  instance.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : ''
+}
 
 const fetcher = (url: string): Promise<API.Generation> =>
   instance.get(url).then((res) => res.data)
 
-const login = async (account: API.Account): Promise<void> => {
+const login = async (account: API.Account): Promise<{ ok: boolean }> => {
   const response = await instance.post<API.LogIn>('accounts/login', account)
 
-  instance.defaults.headers.common[
-    'Authorization'
-  ] = `Bearer ${response.data.jwt}`
+  setCookie({}, 'jwt', response.data.jwt, {
+    maxAge: ONE_WEEK,
+    path: '/',
+  })
+
+  return { ok: true }
+}
+
+const signUp = async (account: API.Account): Promise<{ ok: boolean }> => {
+  await instance.post<API.LogIn>('accounts/sign-up', account)
+
+  return login(account)
 }
 
 const logout = (): void => {
-  instance.defaults.headers.common['Authorization'] = ''
+  destroyCookie({}, 'jwt')
 }
 
 const generateNewDragon = async (): Promise<API.Dragon> => {
@@ -42,10 +57,19 @@ const updateDragon = async (
   return response.data
 }
 
-const buyDragon = async (id: number) => {
+const buyDragon = async (id: number): Promise<API.Dragon> => {
   const response = await instance.post(`dragons/buy/${id}`)
 
   return response.data
 }
 
-export { fetcher, login, logout, generateNewDragon, updateDragon, buyDragon }
+export {
+  fetcher,
+  updateAuthHeader,
+  login,
+  signUp,
+  logout,
+  generateNewDragon,
+  updateDragon,
+  buyDragon,
+}

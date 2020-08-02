@@ -7,7 +7,7 @@ import PublicDragon from '@/components/PublicDragon'
 import useDragons from '@/hooks/useDragon'
 import useAccount from '@/hooks/useAccount'
 
-const InfoPage: FC = () => {
+const PublicDragonPage: FC = () => {
   const dragonData = useDragons('dragons/public')
   const accountData = useAccount()
 
@@ -15,14 +15,22 @@ const InfoPage: FC = () => {
     return <Spinner />
   }
 
-  if (dragonData.isError || accountData.isLoading) {
+  if (dragonData.isError || accountData.isError) {
     return <StatusWarning />
   }
 
   return (
     <Box align='center' pad='medium' margin='0 auto'>
-      <Box>
-        <Text>{accountData.info.balance}</Text>
+      <Box
+        round
+        border
+        margin='small'
+        pad='small'
+        fill='vertical'
+        justify='evenly'
+      >
+        <Text>{`Hi ${accountData.info.username}`}</Text>
+        <Text>{`Your balance is ${accountData.info.balance}`}</Text>
       </Box>
       <Box justify='start' direction='row' flex='shrink' wrap align='center'>
         {dragonData.dragons.map((dragon) => (
@@ -33,4 +41,4 @@ const InfoPage: FC = () => {
   )
 }
 
-export default InfoPage
+export default PublicDragonPage
