@@ -94,7 +94,9 @@ public class DragonServiceImpl implements DragonService {
             }
         }
 
-        return generateDragon(traits, buyerAccount);
+        Dragon babyDragon = generateDragon(traits, buyerAccount);
+        babyDragon.setNickname("A Happy Baby");
+        return babyDragon;
     }
 
     @NotNull

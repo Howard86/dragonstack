@@ -109,6 +109,12 @@ public class DragonController {
             );
         }
 
+        if (dragon.getAccount().getId().equals(account.getId())) {
+            throw new RuntimeException(
+                    "Account is buying its own dragon"
+            );
+        }
+
         Dragon boughtDragon = dragonService.buy(account, dragon);
 
         return new ResponseEntity<>(convertToDTO(boughtDragon), HttpStatus.OK);
