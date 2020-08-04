@@ -63,6 +63,18 @@ const buyDragon = async (id: number): Promise<API.Dragon> => {
   return response.data
 }
 
+const mateDragon = async (
+  ownedDragonId: number,
+  siredDragonId: number,
+): Promise<API.Dragon> => {
+  const response = await instance.post('dragons/mate', {
+    ownedDragonId,
+    siredDragonId,
+  })
+
+  return response.data
+}
+
 export {
   fetcher,
   updateAuthHeader,
@@ -72,4 +84,5 @@ export {
   generateNewDragon,
   updateDragon,
   buyDragon,
+  mateDragon,
 }

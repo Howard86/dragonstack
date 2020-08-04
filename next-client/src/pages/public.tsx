@@ -21,14 +21,7 @@ const PublicDragonPage: FC = () => {
 
   return (
     <Box align='center' pad='medium' margin='0 auto'>
-      <Box
-        round
-        border
-        margin='small'
-        pad='small'
-        fill='vertical'
-        justify='evenly'
-      >
+      <Box round border margin='small' pad='small' justify='evenly'>
         <Text>{`Hi ${accountData.info.username}`}</Text>
         <Text>{`Your balance is ${accountData.info.balance}`}</Text>
       </Box>
