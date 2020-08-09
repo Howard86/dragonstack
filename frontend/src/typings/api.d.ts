@@ -1,19 +1,53 @@
-declare namespace APIResponse {
-  interface Unauthorized {
-    statusCode: 401;
-    error: 'Unauthorized';
+declare namespace API {
+  type Optional<T> = T | undefined
+  type TraitType = 'size' | 'build' | 'patten' | 'backgroundColor'
+  type ImageProps = {
+    [key in TraitType]: string
   }
 
-  interface Login extends UserAccountResponse {
-    dragons: Dragon[];
+  type DragonState = {
+    id: number
+    updated: boolean
+    sellingPrice: number
+    matingPrice: number
+    isPublic: boolean
+    name: string
   }
 
-  type SignUp = UserAccountResponse;
+  interface Generation {
+    id: number
+    expiration: string
+  }
 
-  interface Dragon extends DragonProperty {
-    id: number;
-    generation: Generation;
-    birthdate: string;
-    traits: TraitPair[];
+  interface LogIn {
+    jwt: string
+  }
+
+  interface Account {
+    username: string
+    password: string
+  }
+
+  interface Dragon {
+    id: number
+    birthdate: string
+    nickname: string
+    sireValue: number
+    saleValue: number
+    public: boolean
+    traits: Trait[]
+    generation: Generation
+    account: AccountInfo
+  }
+
+  interface Trait {
+    traitType: TraitType
+    traitValue: string
+  }
+
+  interface AccountInfo {
+    id: number
+    username: string
+    balance: number
   }
 }
