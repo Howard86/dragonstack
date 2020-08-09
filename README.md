@@ -1,16 +1,16 @@
 # DragonStack
 
-A  full-stack  e-commerce site with Java Spring Boot and React for interacting with dragons.
+A full-stack e-commerce site with Java Spring Boot and Next.js to interact with dragons.
 
 ## Getting Started
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) v12
-- Java 14 [JDK](https://openjdk.java.net/projects/jdk/14/)
-- JavaScript Package Manager [Yarn](https://yarnpkg.com/) v1.22.*
-- Java Build Tool [Gradle](https://gradle.org/) v6.5
-- [PostgreSQL](https://www.postgresql.org/) v9.6+ installed, here via [Docker](https://hub.docker.com/_/postgres)
+- [Node.js](https://nodejs.org/) `v12.13.*`
+- Java `14` [JDK](https://openjdk.java.net/projects/jdk/14/)
+- JavaScript Package Manager [Yarn](https://yarnpkg.com/) `v1.22.*`
+- Java Build Tool [Gradle](https://gradle.org/) `v6.5`
+- [PostgreSQL](https://www.postgresql.org/) `v9.6+` installed, here via [Docker](https://hub.docker.com/_/postgres)
 
 ### Installing
 
@@ -25,17 +25,24 @@ docker run --name dragonstack-psql \
     -d postgres:9.6-alpine
 ```
 
-For backend, to start a `Spring Boot` server, run:
+For api server, to start a `Spring Boot` RESTful APIs service, run:
 
 ```bash
 cd backend && ./gradlew bootRun
 ```
 
-For frontend, to use `webpack` to start a dev server, run:
+For website, to start a dev server with hot-reload, run:
 
 ```bash
 cd frontend
-yarn && yarn start-dev
+yarn && yarn dev
+```
+
+Otherwise, to start a production SSR website, first build sites with [webpack](https://webpack.js.org) then start an [express](https://expressjs.com) server to render the page, more details on [Next.js](https://nextjs.org) - an opinionated react framework.
+
+```bash
+cd frontend
+yarn && yarn build && yarn start
 ```
 
 The website can be found on [localhost:8080](http://localhost:8080)
@@ -44,15 +51,19 @@ The website can be found on [localhost:8080](http://localhost:8080)
 
 There is currently no testing on this project.
 
-Simply use `eslint` in frontend folder:
+Currently using [eslint](https://eslint.org/), [prettier](https://prettier.io/) and [typescript](https://www.typescriptlang.org/) to improve code quality for frontend development.
+
+With [husky](https://github.com/typicode/husky)'s git hooks helper and [lint-stage](https://github.com/okonet/lint-staged) linter helper, we automatically run `prettier` and `eslint` before commits, and do a type-check with `typescript` before pushing commits.
+
+To manually start the check, run
 
 ```bash
-yarn lint
+yarn format && yarn lint && yarn type-check
 ```
 
 ## Built With
 
-- [React](https://reactjs.org/) - a JavaScript library for building user interfaces
+- [Next.js](https://reactjs.org/) v9.4.4 - Production grade [React](https://reactjs.org/) applications that scale. The world’s leading companies use `Next.js` by [Vercel](https://vercel.com/) to build static and dynamic websites and web applications.
 - [Spring Boot](https://spring.io/) v2.3.1 - the world's most popular Java framework focusing on speed, simplicity, and productivity.
 
 ## License

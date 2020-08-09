@@ -37,12 +37,12 @@ public class DragonServiceImpl implements DragonService {
 
     @Override
     public List<Dragon> getOwnedDragons(@NotNull Account account) {
-        return dragonRepository.findByAccountId(account.getId());
+        return dragonRepository.findByAccountIdOrderByIdDesc(account.getId());
     }
 
     @Override
     public List<Dragon> getPublicDragons() {
-        return dragonRepository.findByIsPublicTrue();
+        return dragonRepository.findByIsPublicTrueOrderByIdDesc();
     }
 
     @Override
@@ -94,7 +94,9 @@ public class DragonServiceImpl implements DragonService {
             }
         }
 
-        return generateDragon(traits, buyerAccount);
+        Dragon babyDragon = generateDragon(traits, buyerAccount);
+        babyDragon.setNickname("A Happy Baby");
+        return babyDragon;
     }
 
     @NotNull

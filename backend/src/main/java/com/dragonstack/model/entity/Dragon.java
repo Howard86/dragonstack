@@ -34,12 +34,13 @@ public class Dragon {
     @JoinTable(
             name = "dragon_trait",
             joinColumns = {
-                    @JoinColumn(name = "dragon_id")
+                    @JoinColumn(name = "dragon_id", referencedColumnName = "id")
             },
             inverseJoinColumns = {
-                    @JoinColumn(name = "trait_id")
+                    @JoinColumn(name = "trait_id", referencedColumnName = "id")
             }
     )
+    @OrderBy(value = "id ASC")
     private Set<Trait> traits;
 
     @NotNull
