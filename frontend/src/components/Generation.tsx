@@ -1,44 +1,43 @@
-import React, { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
-import { fetchGeneration } from 'store/generation/actions';
-import { RootState } from 'store/reducers';
-import { FetchStates } from 'constants/fetch';
+import useSWR from 'swr'
+import moment from 'moment'
+import React, { FC } from 'react'
+import { Box, Clock, Paragraph } from 'grommet'
+import { StatusWarning } from 'grommet-icons'
 
-const MINIMUM_DELAY = 3000;
+import { fetcher } from '@/api'
+import Spinner from './commons/Spinner'
 
 const Generation: FC = () => {
-  const dispatch = useDispatch();
-  const { expiration, status, id, message } = useSelector(
-    ({ generation }: RootState) => generation,
-  );
+  const { data, error } = useSWR<API.Optional<API.Generation>>(
+    'generations',
+    fetcher,
+    {
+      onSuccess: (data, _key, config) => {
+        const expiredSeconds = new Date(data.expiration).valueOf()
+        const now = new Date().valueOf()
+        config.refreshInterval = expiredSeconds - now + 1000
+      },
+    },
+  )
 
-  const isError = status === FetchStates.ERROR;
-  const expirationTime = moment(new Date(expiration)).format('h:mm:ss a');
+  if (error) {
+    return <StatusWarning />
+  }
 
-  useEffect(() => {
-    let delay = new Date(expiration).getTime() - new Date().getTime();
+  if (!data) {
+    return <Spinner />
+  }
 
-    if (delay < MINIMUM_DELAY) {
-      delay = MINIMUM_DELAY;
-    }
+  return (
+    <Box align='center'>
+      <Paragraph>Generation {data.id}</Paragraph>
+      <Paragraph>
+        Expires at {moment(data.expiration).format('hh:mm:ss')}
+      </Paragraph>
+      <Paragraph>Current Time is </Paragraph>
+      <Clock type='digital' />
+    </Box>
+  )
+}
 
-    const timer = setTimeout(() => dispatch(fetchGeneration()), delay);
-    return () => clearTimeout(timer);
-  }, [expiration]);
-
-  return isError ? (
-    <div>{message}</div>
-  ) : (
-    <div className='card'>
-      <div className='card-heading'>
-        <h3 className='card-title'>{`Generation ${id}`}</h3>
-      </div>
-      <div className='card-body'>
-        <h4>{`Expires at ${expirationTime}`}</h4>
-      </div>
-    </div>
-  );
-};
-
-export default Generation;
+export default Generation
