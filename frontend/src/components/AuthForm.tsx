@@ -1,6 +1,14 @@
 import React, { FC, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Box, TextInput, Button, Form, FormField, Anchor } from 'grommet'
+import {
+  Box,
+  TextInput,
+  Button,
+  Form,
+  FormField,
+  Anchor,
+  FormExtendedEvent,
+} from 'grommet'
 
 import { login, signUp } from '@/api'
 
@@ -18,7 +26,7 @@ const AuthForm: FC = () => {
   const [value, setValue] = useState(DEFAULT_VALUE)
   const [hasAccount, setHasAccount] = useState(true)
 
-  const handleOnSubmit = async (event) => {
+  const handleOnSubmit = async (event: FormExtendedEvent<API.Account>) => {
     const action = hasAccount ? login : signUp
     action(event.value)
       .then(() => {
@@ -33,7 +41,7 @@ const AuthForm: FC = () => {
     <Box align='center' gap='small'>
       <Form
         value={value}
-        onChange={(value) => setValue(value)}
+        onChange={(value: API.Account) => setValue(value)}
         onSubmit={handleOnSubmit}
         onReset={() => {
           setValue(DEFAULT_VALUE)
